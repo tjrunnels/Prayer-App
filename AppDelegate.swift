@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import Amplify
+import AmplifyPlugins
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
