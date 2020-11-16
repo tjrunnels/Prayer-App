@@ -10,6 +10,7 @@
 		1B18208A2560D32900AC42EE /* NoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1820872560D32800AC42EE /* NoteData.swift */; };
 		1B18208B2560D32900AC42EE /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1820882560D32800AC42EE /* AmplifyModels.swift */; };
 		1B18208C2560D32900AC42EE /* NoteData+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1820892560D32800AC42EE /* NoteData+Schema.swift */; };
+		1B1820B42562BFB000AC42EE /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1820B32562BFB000AC42EE /* CaptureImageView.swift */; };
 		1BA10066255EF46E004882E7 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BA10064255EF46E004882E7 /* amplifyconfiguration.json */; };
 		1BA10067255EF46E004882E7 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BA10065255EF46E004882E7 /* awsconfiguration.json */; };
 		1BA1006C255EF4BA004882E7 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA1006B255EF4BA004882E7 /* Backend.swift */; };
@@ -48,6 +49,7 @@
 		1B1820872560D32800AC42EE /* NoteData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteData.swift; sourceTree = "<group>"; };
 		1B1820882560D32800AC42EE /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
 		1B1820892560D32800AC42EE /* NoteData+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NoteData+Schema.swift"; sourceTree = "<group>"; };
+		1B1820B32562BFB000AC42EE /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		1BA10064255EF46E004882E7 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
 		1BA10065255EF46E004882E7 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		1BA1006B255EF4BA004882E7 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				1BE4608A255EE3CF00576087 /* Assets.xcassets */,
 				1BE4608F255EE3CF00576087 /* Info.plist */,
 				1BE4608C255EE3CF00576087 /* Preview Content */,
+				1B1820B32562BFB000AC42EE /* CaptureImageView.swift */,
 			);
 			path = "Prayer App";
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				1BA10071255EF586004882E7 /* AppDelegate.swift in Sources */,
 				1BE46089255EE3CD00576087 /* ContentView.swift in Sources */,
 				1B18208A2560D32900AC42EE /* NoteData.swift in Sources */,
+				1B1820B42562BFB000AC42EE /* CaptureImageView.swift in Sources */,
 				1BE46087255EE3CD00576087 /* Prayer_AppApp.swift in Sources */,
 				1B18208B2560D32900AC42EE /* AmplifyModels.swift in Sources */,
 				1BA1006C255EF4BA004882E7 /* Backend.swift in Sources */,

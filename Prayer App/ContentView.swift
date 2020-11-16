@@ -12,6 +12,7 @@ import SwiftUI
 
 
 
+
 // singleton object to store user data
 class UserData : ObservableObject {
     private init() {}
@@ -19,6 +20,7 @@ class UserData : ObservableObject {
 
     @Published var notes : [Note] = []
     @Published var isSignedIn : Bool = false
+    @Published var currentError : String = ""
 }
 
 // the data class to represents Notes
@@ -37,6 +39,18 @@ class Note : Identifiable, ObservableObject {
     }
     convenience init(from data: NoteData) {
         self.init(id: data.id, name: data.name, description: data.description, image: data.image)
+        
+        //s3 api call
+        if let name = self.imageName {
+                // asynchronously download the image
+                Backend.shared.retrieveImage(name: name) { (data) in
+                    // update the UI on the main thread
+                    DispatchQueue.main.async() {
+                        let uim = UIImage(data: data)
+                        self.image = Image(uiImage: uim!)
+                    }
+                }
+            }
      
         // store API object for easy retrieval later
         self._data = data
@@ -114,6 +128,58 @@ struct SignOutButton : View {
         }
     }
 }
+
+struct SignInView : View {
+    @State var username : String    = ""
+    @State var password : String    = ""
+    @ObservedObject private var userData: UserData = .shared
+    
+    var body: some View {
+        VStack {
+                    
+            Text("Sign In")
+                .font(.largeTitle)
+                .bold()
+            TextField("Username", text: $username)
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+            TextField("Password", text: $password)
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                    
+                    
+            if(self.userData.currentError != "") {
+                Text(self.userData.currentError).font(.footnote).foregroundColor(.red).padding()
+            }
+                    
+                Button(action: {
+                    Backend.shared.signIn(username: self.username, password: self.password)
+                    print("signing in: \(self.username)")
+                }
+                ){
+                    HStack {
+                        Image(systemName: "person.fill")
+                            .scaleEffect(1.5)
+                            .padding()
+                        Text("Sign In")
+                            .font(.largeTitle)
+                    }
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                    .scaleEffect(0.8)
+                }
+            
+        }
+    }
+}
+
+
 // this is the main view of our app,
 // it is made of a Table with one line per Note
 struct ContentView: View {
@@ -124,10 +190,13 @@ struct ContentView: View {
     @State var name : String        = "New Note"
     @State var description : String = "This is a new note"
     @State var image : String       = "image"
+    
+    
 
     
     @ObservedObject private var userData: UserData = .shared
 
+    // MARK: - begin of main body
     var body: some View {
         
         ZStack {
@@ -146,7 +215,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .navigationBarTitle(Text("Notes"))
+                    .navigationBarTitle(Text("Prayers"))
                     .navigationBarItems(
                         leading: SignOutButton(),
                         trailing: Button(action: {
@@ -158,7 +227,7 @@ struct ContentView: View {
                     AddNoteView(isPresented: self.$showCreateNote, userData: self.userData)
                 }
             } else {
-                SignInButton()
+                SignInView()
             }
         }
     }
@@ -177,7 +246,7 @@ struct ContentView_Previews: PreviewProvider {
 // this is a test data set to preview the UI in Xcode
 func prepareTestData() -> UserData {
     let userData = UserData.shared
-    userData.isSignedIn = true
+    userData.isSignedIn = false
     let desc = "this is a very long description that should fit on multiiple lines.\nit even has a line break\nor two."
 
     let n1 = Note(id: "01", name: "Hello world", description: desc, image: "mic")
@@ -197,7 +266,11 @@ struct AddNoteView: View {
 
     @State var name : String        = "New Note"
     @State var description : String = "This is a new note"
-    @State var image : String       = "image"
+    
+    @State var image : UIImage?
+    @State var showCaptureImageView = false
+    
+    
     var body: some View {
         Form {
 
@@ -207,26 +280,57 @@ struct AddNoteView: View {
             }
 
             Section(header: Text("PICTURE")) {
-                TextField("Name", text: $image)
+                VStack {
+                    Button(action: {
+                        self.showCaptureImageView.toggle()
+                    }) {
+                        Text("Choose photo")
+                    }.sheet(isPresented: $showCaptureImageView) {
+                        CaptureImageView(isShown: self.$showCaptureImageView, image: self.$image)
+                    }
+                    if (image != nil ) {
+                        HStack {
+                            Spacer()
+                            Image(uiImage: image!)
+                                .resizable()
+                                .frame(width: 250, height: 200)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                                .shadow(radius: 10)
+                            Spacer()
+                        }
+                    }
+                }
             }
 
             Section {
                 Button(action: {
                     self.isPresented = false
-                    let noteData = NoteData(id : UUID().uuidString,
-                                            name: self.$name.wrappedValue,
-                                            description: self.$description.wrappedValue)
-                    let note = Note(from: noteData)
+
+                    let note = Note(id : UUID().uuidString,
+                                    name: self.$name.wrappedValue,
+                                    description: self.$description.wrappedValue)
+
+                    if let i = self.image  {
+                        note.imageName = UUID().uuidString
+                        note.image = Image(uiImage: i)
+
+                        // asynchronously store the image (and assume it will work)
+                        Backend.shared.storeImage(name: note.imageName!, image: (i.pngData())!)
+                    }
 
                     // asynchronously store the note (and assume it will succeed)
                     Backend.shared.createNote(note: note)
 
                     // add the new note in our userdata, this will refresh UI
-                    self.userData.notes.append(note)
+                    withAnimation { self.userData.notes.append(note) }
                 }) {
                     Text("Create this note")
                 }
             }
+
+
+
         }
     }
 }
