@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Amplify
 
 
 
@@ -103,86 +104,32 @@ struct ListRow: View {
     }
 }
 
-struct SignInButton: View {
-    var body: some View {
-        Button(action: { Backend.shared.signIn() }){
-            HStack {
-                Image(systemName: "person.fill")
-                    .scaleEffect(1.5)
-                    .padding()
-                Text("Sign In")
-                    .font(.largeTitle)
-            }
-            .padding()
-            .foregroundColor(.white)
-            .background(Color.green)
-            .cornerRadius(30)
-        }
-    }
-}
+//struct SignInButton: View {
+//    var body: some View {
+//        Button(action: { Backend.shared.signIn() }){
+//            HStack {
+//                Image(systemName: "person.fill")
+//                    .scaleEffect(1.5)
+//                    .padding()
+//                Text("Sign In")
+//                    .font(.largeTitle)
+//            }
+//            .padding()
+//            .foregroundColor(.white)
+//            .background(Color.green)
+//            .cornerRadius(30)
+//        }
+//    }
+//}
+//
 
-struct SignOutButton : View {
-    var body: some View {
-        Button(action: { Backend.shared.signOut() }) {
-                Text("Sign Out")
-        }
-    }
-}
-
-struct SignInView : View {
-    @State var username : String    = ""
-    @State var password : String    = ""
-    @ObservedObject private var userData: UserData = .shared
-    
-    var body: some View {
-        VStack {
-                    
-            Text("Sign In")
-                .font(.largeTitle)
-                .bold()
-            TextField("Username", text: $username)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-            TextField("Password", text: $password)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-                    
-                    
-            if(self.userData.currentError != "") {
-                Text(self.userData.currentError).font(.footnote).foregroundColor(.red).padding()
-            }
-                    
-                Button(action: {
-                    Backend.shared.signIn(username: self.username, password: self.password)
-                    print("signing in: \(self.username)")
-                }
-                ){
-                    HStack {
-                        Image(systemName: "person.fill")
-                            .scaleEffect(1.5)
-                            .padding()
-                        Text("Sign In")
-                            .font(.largeTitle)
-                    }
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color.blue)
-                    .cornerRadius(30)
-                    .scaleEffect(0.8)
-                }
-            
-        }
-    }
-}
 
 
 // this is the main view of our app,
 // it is made of a Table with one line per Note
 struct ContentView: View {
+    
+    @EnvironmentObject var sessionManager : AuthSessionManager
     
     // add at the begining of ContentView class
     @State var showCreateNote = false
@@ -191,7 +138,12 @@ struct ContentView: View {
     @State var description : String = "This is a new note"
     @State var image : String       = "image"
     
+    let user: AuthUser
     
+    init(user: AuthUser) {
+        Backend.shared.updateUserData(withSignInStatus: true)
+        self.user = user
+    }
 
     
     @ObservedObject private var userData: UserData = .shared
@@ -215,9 +167,11 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .navigationBarTitle(Text("Prayers"))
+                    .navigationBarTitle(Text(" \(user.username)'s Prayers"))
                     .navigationBarItems(
-                        leading: SignOutButton(),
+                        leading: Button(action: {sessionManager.signOut() }) {
+                            Text("Sign Out")
+                        },
                         trailing: Button(action: {
                             self.showCreateNote.toggle()
                         }) {
@@ -227,7 +181,7 @@ struct ContentView: View {
                     AddNoteView(isPresented: self.$showCreateNote, userData: self.userData)
                 }
             } else {
-                SignInView()
+                LoginView()
             }
         }
     }
@@ -235,11 +189,16 @@ struct ContentView: View {
 
 // this is use to preview the UI in Xcode
 struct ContentView_Previews: PreviewProvider {
+    
+    private struct leDummyUser: AuthUser {
+       let userId: String = "1"
+       let username: String = "dummyUser"
+   }
+    
     static var previews: some View {
-
+        
         let _ = prepareTestData()
-
-        return ContentView()
+        return ContentView(user: leDummyUser())
     }
 }
 

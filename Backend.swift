@@ -10,62 +10,68 @@
 import UIKit
 import Amplify
 import AmplifyPlugins
+import SwiftUI
 
-class Backend {
+
+class Backend : ObservableObject {
     static let shared = Backend()
     static func initialize() -> Backend {
         return .shared
     }
+    
+    //public var isWaitingToConfim: Binding<Bool> = Binding.constant(false)
+    @ObservedObject var sessionManager = AuthSessionManager()
+    
     private init() {
-        // MARK: - amplify
+      // MARK: - amplify
       // initialize amplify
-      do {
-        try Amplify.add(plugin: AWSCognitoAuthPlugin())
-        try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: AmplifyModels()))
-        try Amplify.add(plugin: AWSS3StoragePlugin())
-        try Amplify.configure()
-        print("Initialized Amplify");
-      } catch {
-        print("Could not initialize Amplify: \(error)")
-      }
+//      do {
+//        try Amplify.add(plugin: AWSCognitoAuthPlugin())
+//        try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: AmplifyModels()))
+//        try Amplify.add(plugin: AWSS3StoragePlugin())
+//        try Amplify.configure()
+//        print("Initialized Amplify");
+//      } catch {
+//        print("Could not initialize Amplify: \(error)")
+//      }
         
         
-        // listen to auth events.
-        // see https://github.com/aws-amplify/amplify-ios/blob/master/Amplify/Categories/Auth/Models/AuthEventName.swift
-        _ = Amplify.Hub.listen(to: .auth) { (payload) in
-
-            switch payload.eventName {
-
-            case HubPayload.EventName.Auth.signedIn:
-                print("==HUB== User signed In, update UI")
-                self.updateUserData(withSignInStatus: true)
-
-            case HubPayload.EventName.Auth.signedOut:
-                print("==HUB== User signed Out, update UI")
-                self.updateUserData(withSignInStatus: false)
-
-            case HubPayload.EventName.Auth.sessionExpired:
-                print("==HUB== Session expired, show sign in UI")
-                self.updateUserData(withSignInStatus: false)
-
-            default:
-                //print("==HUB== \(payload)")
-                break
-            }
-        }
-         
-        // let's check if user is signedIn or not
-         _ = Amplify.Auth.fetchAuthSession { (result) in
-             do {
-                 let session = try result.get()
-                        
-        // let's update UserData and the UI
-             self.updateUserData(withSignInStatus: session.isSignedIn)
-                        
-             } catch {
-                  print("Fetch auth session failed with error - \(error)")
-            }
-        }    
+//        // listen to auth events.
+//        // see https://github.com/aws-amplify/amplify-ios/blob/master/Amplify/Categories/Auth/Models/AuthEventName.swift
+//        _ = Amplify.Hub.listen(to: .auth) { (payload) in
+//
+//            switch payload.eventName {
+//
+//            case HubPayload.EventName.Auth.signedIn:
+//                print("==HUB== User signed In, update UI")
+//                self.updateUserData(withSignInStatus: true)
+//
+//            case HubPayload.EventName.Auth.signedOut:
+//                print("==HUB== User signed Out, update UI")
+//                self.updateUserData(withSignInStatus: false)
+//
+//            case HubPayload.EventName.Auth.sessionExpired:
+//                print("==HUB== Session expired, show sign in UI")
+//                self.updateUserData(withSignInStatus: false)
+//
+//            default:
+//                //print("==HUB== \(payload)")
+//                break
+//            }
+//        }
+        
+//        // let's check if user is signedIn or not
+//         _ = Amplify.Auth.fetchAuthSession { (result) in
+//             do {
+//                 let session = try result.get()
+//
+//        // let's update UserData and the UI
+//             self.updateUserData(withSignInStatus: session.isSignedIn)
+//
+//             } catch {
+//                  print("Fetch auth session failed with error - \(error)")
+//            }
+//        }
         
         
         
@@ -109,8 +115,37 @@ class Backend {
             switch result {
             case .success:
                 print("Successfully signed out")
+                self.sessionManager.showLogin()
             case .failure(let error):
                 print("Sign out failed with error \(error)")
+            }
+        }
+    }
+    
+    func signUp(username: String, password: String, email: String) {
+        let userAttributes = [AuthUserAttribute(.email, value: email)]
+        let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
+        Amplify.Auth.signUp(username: username, password: password, options: options) { result in
+            switch result {
+            case .success(let signUpResult):
+                if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
+                    print("Delivery details \(String(describing: deliveryDetails))")
+                } else {
+                    print("SignUp Complete")
+                }
+            case .failure(let error):
+                print("An error occurred while registering a user \(error)")
+            }
+        }
+    }
+    
+    func confirmSignUp(for username: String, with confirmationCode: String) {
+        Amplify.Auth.confirmSignUp(for: username, confirmationCode: confirmationCode) { result in
+            switch result {
+            case .success:
+                print("Confirm signUp succeeded")
+            case .failure(let error):
+                print("An error occurred while confirming sign up \(error)")
             }
         }
     }

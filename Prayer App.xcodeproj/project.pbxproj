@@ -11,6 +11,9 @@
 		1B18208B2560D32900AC42EE /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1820882560D32800AC42EE /* AmplifyModels.swift */; };
 		1B18208C2560D32900AC42EE /* NoteData+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1820892560D32800AC42EE /* NoteData+Schema.swift */; };
 		1B1820B42562BFB000AC42EE /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1820B32562BFB000AC42EE /* CaptureImageView.swift */; };
+		1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */; };
+		1B8DDB132565800000ADCB93 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB122565800000ADCB93 /* LoginView.swift */; };
+		1B8DDB182565800E00ADCB93 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB172565800E00ADCB93 /* SignUpView.swift */; };
 		1BA10066255EF46E004882E7 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BA10064255EF46E004882E7 /* amplifyconfiguration.json */; };
 		1BA10067255EF46E004882E7 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BA10065255EF46E004882E7 /* awsconfiguration.json */; };
 		1BA1006C255EF4BA004882E7 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA1006B255EF4BA004882E7 /* Backend.swift */; };
@@ -21,6 +24,8 @@
 		1BE4608E255EE3CF00576087 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BE4608D255EE3CF00576087 /* Preview Assets.xcassets */; };
 		1BE46099255EE3CF00576087 /* Prayer_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE46098255EE3CF00576087 /* Prayer_AppTests.swift */; };
 		1BE460A4255EE3CF00576087 /* Prayer_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE460A3255EE3CF00576087 /* Prayer_AppUITests.swift */; };
+		1BE521E02566B90A001A365F /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE521DF2566B90A001A365F /* ConfirmationView.swift */; };
+		1BE521E52566BC4C001A365F /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE521E42566BC4C001A365F /* SessionView.swift */; };
 		A5C3EC0A8F42D9A155262EEF /* Pods_Prayer_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1959E5F3EDD0AD40DBB50A00 /* Pods_Prayer_AppTests.framework */; };
 		D9881140A706C602D450F2C9 /* Pods_Prayer_App_Prayer_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D10BDEBEA06B240EA06D6D6 /* Pods_Prayer_App_Prayer_AppUITests.framework */; };
 		D9A0B0AB5B0823FB1934CE2F /* Pods_Prayer_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6C282B1CD4AA4E0359F55B /* Pods_Prayer_App.framework */; };
@@ -50,6 +55,9 @@
 		1B1820882560D32800AC42EE /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
 		1B1820892560D32800AC42EE /* NoteData+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NoteData+Schema.swift"; sourceTree = "<group>"; };
 		1B1820B32562BFB000AC42EE /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
+		1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionManager.swift; sourceTree = "<group>"; };
+		1B8DDB122565800000ADCB93 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1B8DDB172565800E00ADCB93 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		1BA10064255EF46E004882E7 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
 		1BA10065255EF46E004882E7 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		1BA1006B255EF4BA004882E7 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
@@ -66,6 +74,8 @@
 		1BE4609F255EE3CF00576087 /* Prayer AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Prayer AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE460A3255EE3CF00576087 /* Prayer_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prayer_AppUITests.swift; sourceTree = "<group>"; };
 		1BE460A5255EE3CF00576087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BE521DF2566B90A001A365F /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
+		1BE521E42566BC4C001A365F /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
 		2E5A0888BCD98C276204468E /* Pods-Prayer AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prayer AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Prayer AppTests/Pods-Prayer AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6263CFE74F4F01844E20228B /* Pods-Prayer App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prayer App.release.xcconfig"; path = "Target Support Files/Pods-Prayer App/Pods-Prayer App.release.xcconfig"; sourceTree = "<group>"; };
 		6D10BDEBEA06B240EA06D6D6 /* Pods_Prayer_App_Prayer_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Prayer_App_Prayer_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +135,7 @@
 		1BE4607A255EE3CD00576087 = {
 			isa = PBXGroup;
 			children = (
+				1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */,
 				1BA10070255EF586004882E7 /* AppDelegate.swift */,
 				1BA1006B255EF4BA004882E7 /* Backend.swift */,
 				1BA10064255EF46E004882E7 /* amplifyconfiguration.json */,
@@ -158,6 +169,10 @@
 				1BE4608F255EE3CF00576087 /* Info.plist */,
 				1BE4608C255EE3CF00576087 /* Preview Content */,
 				1B1820B32562BFB000AC42EE /* CaptureImageView.swift */,
+				1B8DDB122565800000ADCB93 /* LoginView.swift */,
+				1B8DDB172565800E00ADCB93 /* SignUpView.swift */,
+				1BE521DF2566B90A001A365F /* ConfirmationView.swift */,
+				1BE521E42566BC4C001A365F /* SessionView.swift */,
 			);
 			path = "Prayer App";
 			sourceTree = "<group>";
@@ -451,12 +466,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BA10071255EF586004882E7 /* AppDelegate.swift in Sources */,
+				1BE521E02566B90A001A365F /* ConfirmationView.swift in Sources */,
 				1BE46089255EE3CD00576087 /* ContentView.swift in Sources */,
 				1B18208A2560D32900AC42EE /* NoteData.swift in Sources */,
 				1B1820B42562BFB000AC42EE /* CaptureImageView.swift in Sources */,
 				1BE46087255EE3CD00576087 /* Prayer_AppApp.swift in Sources */,
+				1BE521E52566BC4C001A365F /* SessionView.swift in Sources */,
+				1B8DDB182565800E00ADCB93 /* SignUpView.swift in Sources */,
+				1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */,
 				1B18208B2560D32900AC42EE /* AmplifyModels.swift in Sources */,
 				1BA1006C255EF4BA004882E7 /* Backend.swift in Sources */,
+				1B8DDB132565800000ADCB93 /* LoginView.swift in Sources */,
 				1B18208C2560D32900AC42EE /* NoteData+Schema.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
