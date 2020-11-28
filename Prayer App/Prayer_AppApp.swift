@@ -16,7 +16,7 @@ struct Prayer_AppApp: App {
     
     init() {
         configureAmplify()
-        //Backend.shared.signOut()
+        //ackend.shared.signOut()
         sessionManager.getCurrentAuthUser()
     }
     
@@ -48,7 +48,7 @@ struct Prayer_AppApp: App {
                 ConfirmationView(username: username)
                     .environmentObject(sessionManager)
             case .session(let user):
-                ContentView(user: user) 
+                MainTabView(user: user)
                     .environmentObject(sessionManager)
             }
         }

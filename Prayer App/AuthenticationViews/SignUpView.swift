@@ -19,8 +19,7 @@ struct SignUpView : View {
     @State var password : String    = ""
     @State var code : String    = ""
 
-    @ObservedObject private var userData: UserData = .shared
-    //@Binding var waiting : Bool = Backend.shared.$isWaitingToConfim
+    @ObservedObject private var userData: SessionData = .shared
     
     var body: some View {
         VStack {

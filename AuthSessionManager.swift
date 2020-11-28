@@ -61,7 +61,7 @@ final class AuthSessionManager: ObservableObject {
             
             switch  result {
             case .success:
-                Backend.shared.updateUserData(withSignInStatus: false)
+                AWS_Backend.shared.updateSessionData(withSignInStatus: false)
                 DispatchQueue.main.async {
                     self?.getCurrentAuthUser()
                 }

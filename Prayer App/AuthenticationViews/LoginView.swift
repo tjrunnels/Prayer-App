@@ -13,7 +13,7 @@ struct LoginView: View {
 
     @State var username : String    = ""
     @State var password : String    = ""
-    @ObservedObject private var userData: UserData = .shared
+    @ObservedObject private var userData: SessionData = .shared
 
     @State var showSignUpView = false
 
