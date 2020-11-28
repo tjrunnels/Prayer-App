@@ -35,7 +35,7 @@ struct ContentView: View {
     // MARK: - begin of main body
     var body: some View {
         
-        ListPrayersView(sessionData: sessionData)
+        Text("...you're not supposed to be here! (this is ContentView)")
     
         
     }

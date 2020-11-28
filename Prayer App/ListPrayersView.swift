@@ -6,20 +6,26 @@
 //
 
 import SwiftUI
+import Amplify
 
 struct ListPrayersView: View {
     @EnvironmentObject var sessionManager : AuthSessionManager
-
     var sessionData: SessionData
+    var user: AuthUser
     
     
     var body: some View {
         
-        ZStack {
+            VStack{
+                //user's prayers
                 NavigationView {
                     List {
                         ForEach(sessionData.Prayers) { Prayer in
-                            ListRow(Prayer: Prayer)
+                            
+                            if(Prayer.createdBy == user.username) {
+                                ListRow(Prayer: Prayer)
+                            }
+                           
                         }.onDelete { indices in
                             indices.forEach {
                                 // removing from session data will refresh UI
@@ -30,14 +36,32 @@ struct ListPrayersView: View {
                             }
                         }
                     }
-                    .navigationBarTitle(Text("Prayers"))
+                    .navigationBarTitle(Text(" \(user.username)'s Prayers"))
                    
                 }
-        }
+                
+                
+                //other prayers
+                NavigationView {
+                    List {
+                        ForEach(sessionData.Prayers) { Prayer in
+                            
+                            if(Prayer.createdBy != user.username) {
+                                ListRow(Prayer: Prayer)
+                            }
+                           
+                        }
+                    }
+                    .navigationBarTitle(Text(" Global Prayers"))
+                   
+                }
+            
+            }//end of VStack
+            
         
-        
-    }
-}
+    }//end of view
+    
+}//end of struct
 
 struct ListPrayersView_Previews: PreviewProvider {
     let sessionData = SessionData.shared
