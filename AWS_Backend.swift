@@ -19,7 +19,7 @@ class AWS_Backend : ObservableObject {
         return .shared
     }
     
-    @ObservedObject var sessionManager = AuthSessionManager()
+    @ObservedObject var authSessionManager = AuthSessionManager()
     
     private init() {
         
@@ -35,8 +35,10 @@ class AWS_Backend : ObservableObject {
             // when user is signed in, query the database, otherwise empty our model
             if status {
                 self.queryPrayers()
+                print("sessionData updated, prayers: \(sessionData.Prayers.count)")
             } else {
                 sessionData.Prayers = []
+                print("sessionData updated, prayers: \(sessionData.Prayers.count)")
             }
         }
     }

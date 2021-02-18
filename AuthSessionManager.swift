@@ -43,6 +43,7 @@ final class AuthSessionManager: ObservableObject {
             
             switch  result {
             case .success(let signInResult):
+                //redundant... not sure why:  AWS_Backend.shared.updateSessionData(withSignInStatus: true)
                 print(signInResult)
                 if signInResult.isSignedIn {
                     DispatchQueue.main.async {

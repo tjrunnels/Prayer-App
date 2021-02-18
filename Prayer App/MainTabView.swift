@@ -26,18 +26,24 @@ struct MainTabView: View {
                     Image(systemName: "text.bubble")
                     Text("Prayer")
                 }
-            ListPrayersView(sessionData: sessionData, user: user)
+            ListPrayersView( user: user)
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("List")
                 }
                 .environmentObject(sessionManager)
-            AccountView (user: user)
+//            AccountView (user: user)
+//                .tabItem {
+//                    Image(systemName: "person.crop.circle")
+//                    Text("Account")
+//                }
+//                .environmentObject(sessionManager)
+            
+            UserView (user: prayerUser)
                 .tabItem {
-                    Image(systemName: "person.crop.circle")
-                    Text("Account")
+                    Image(systemName: "person.2.circle")
+                    Text("User")
                 }
-                .environmentObject(sessionManager)
             
         }
     }
