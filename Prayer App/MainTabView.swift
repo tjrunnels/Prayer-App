@@ -10,14 +10,14 @@ import Amplify
 
 struct MainTabView: View {
     @EnvironmentObject var authSessionManager : AuthSessionManager
-    @ObservedObject private var sessionData: SessionData = .shared
+    @StateObject var sessionData = SessionData()
 
     let user: AuthUser
     @State var showAdd: Bool = true
     
     init(user: AuthUser) {
-        AWS_Backend.shared.updateSessionData(withSignInStatus: true)
         self.user = user
+        //bug here ^ No ObservableObject of type SessionData found even tho PrayerAppApp clearly has it
     }
     
     var body: some View {
@@ -36,6 +36,7 @@ struct MainTabView: View {
                     Text("List")
                 }
                 .environmentObject(authSessionManager)
+                .environmentObject(self.sessionData)
 //            AccountView (user: user)
 //                .tabItem {
 //                    Image(systemName: "person.crop.circle")
@@ -46,7 +47,13 @@ struct MainTabView: View {
            
             
         }
+        .onAppear(perform: sessionData.updatePrayersFromAWS)
     }
+}
+
+extension MainTabView {
+        
+    
 }
 
 struct MainTabView_Previews: PreviewProvider {

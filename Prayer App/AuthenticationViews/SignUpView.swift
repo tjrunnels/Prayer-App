@@ -19,7 +19,7 @@ struct SignUpView : View {
     @State var password : String    = ""
     @State var code : String    = ""
 
-    @ObservedObject private var userData: SessionData = .shared
+//    @ObservedObject private var userData: SessionData = .shared
     
     var body: some View {
         VStack {

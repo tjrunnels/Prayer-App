@@ -17,10 +17,12 @@ enum AuthState {
 
 final class AuthSessionManager: ObservableObject {
     @Published var authState: AuthState = .login
+    @Published var authUsername = String()
     
     func getCurrentAuthUser() {
         if let user = Amplify.Auth.getCurrentUser() {
             print("Session with user: " + user.username)
+            authUsername = user.username
             authState = .session(user: user)
         } else {
             authState = .login
@@ -63,7 +65,7 @@ final class AuthSessionManager: ObservableObject {
             
             switch  result {
             case .success:
-                AWS_Backend.shared.updateSessionData(withSignInStatus: false)
+               // AWS_Backend.shared.updateSessionData(withSignInStatus: false, sessionDataPrayers: nil)
                 DispatchQueue.main.async {
                     self?.getCurrentAuthUser()
                 }

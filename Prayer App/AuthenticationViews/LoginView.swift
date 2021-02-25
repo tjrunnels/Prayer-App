@@ -13,7 +13,7 @@ struct LoginView: View {
 
     @State var username : String    = ""
     @State var password : String    = ""
-    @ObservedObject private var userData: SessionData = .shared
+//    @ObservedObject private var userData: SessionData = .shared
 
     @State var showSignUpView = false
 
@@ -34,10 +34,10 @@ struct LoginView: View {
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                     
-                    
-            if(self.userData.currentError != "") {
-                Text(self.userData.currentError).font(.footnote).foregroundColor(.red).padding()
-            }
+//
+//            if(self.userData.currentError != "") {
+//                Text(self.userData.currentError).font(.footnote).foregroundColor(.red).padding()
+//            }
                     
             Button(action: {
                 sessionManager.login(username: self.username, password: self.password)

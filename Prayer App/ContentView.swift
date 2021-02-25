@@ -25,12 +25,12 @@ struct ContentView: View {
     let user: AuthUser
     
     init(user: AuthUser) {
-        AWS_Backend.shared.updateSessionData(withSignInStatus: true)
+      //  AWS_Backend.shared.updateSessionData(withSignInStatus: true)
         self.user = user
     }
 
     
-    @ObservedObject private var sessionData: SessionData = .shared
+//    @ObservedObject private var sessionData: SessionData = .shared
 
     // MARK: - begin of main body
     var body: some View {
@@ -53,26 +53,26 @@ struct ContentView_Previews: PreviewProvider {
    }
     
     static var previews: some View {
-        
-        let _ = prepareTestData()
-        return ContentView(user: leDummyUser())
+//
+//        let _ = prepareTestData()
+//        return ContentView(user: leDummyUser())
+        Text("not built -tom")
     }
 }
-
-// this is a test data set to preview the UI in Xcode
-func prepareTestData() -> SessionData {
-    let sessionData = SessionData.shared
-    sessionData.isSignedIn = false
-    let desc = "this is a very long description that should fit on multiiple lines.\nit even has a line break\nor two."
-
-    let n1 = Prayer(id: "01", name: "Hello world", description: desc, image: "mic")
-    let n2 = Prayer(id: "02", name: "A new Prayer", description: desc, image: "phone")
-
-    n1.image = Image(systemName: n1.imageName!)
-    n2.image = Image(systemName: n2.imageName!)
-
-    sessionData.prayers = [ n1, n2 ]
-
-    return sessionData
-}
-
+//
+//// this is a test data set to preview the UI in Xcode
+//func prepareTestData() -> SessionData {
+////    let sessionData = SessionData.shared
+//    let desc = "this is a very long description that should fit on multiiple lines.\nit even has a line break\nor two."
+//
+//    let n1 = Prayer(id: "01", name: "Hello world", description: desc, image: "mic")
+//    let n2 = Prayer(id: "02", name: "A new Prayer", description: desc, image: "phone")
+//
+//    n1.image = Image(systemName: n1.imageName!)
+//    n2.image = Image(systemName: n2.imageName!)
+//
+//    sessionData.prayers = [ n1, n2 ]
+//
+//    return sessionData
+//}
+//

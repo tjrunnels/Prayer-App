@@ -10,11 +10,13 @@ import Amplify
 
 struct ListPrayersView: View {
     @EnvironmentObject var sessionManager : AuthSessionManager
-    @State var sessionData = SessionData.shared
+    @EnvironmentObject var sessionData : SessionData
     var user: AuthUser
     
     @State var updateNowPlz : Bool = false
     @State var showAddPrayerView = false
+    
+
     
     let listofBadgeLists : [[PrayerBadgeType]] = [
         [.saved, .twoOrMore],
@@ -81,16 +83,16 @@ struct ListPrayersView: View {
                                         y: 3)
                                 
                             }.sheet(isPresented: $showAddPrayerView) {
-                                AddPrayerView(sessionData: $sessionData, user: user, showAddPrayerView: $showAddPrayerView)
+                                AddPrayerView(sessionDataPrayers: $sessionData.prayers, user: user, showAddPrayerView: $showAddPrayerView)
                             }
+                            
                         }
-                }
+                }//zstack
                 
                 
               
             
-            }//end of VStack
-            
+            }//end of Nav
         
     }//end of view
     

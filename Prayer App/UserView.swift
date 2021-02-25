@@ -34,7 +34,7 @@ struct UserView: View {
                     HStack{
                         Circle().frame(width: 80, height: 80, alignment: .leading)
                         VStack{
-                            Text("@" + user.username).font(.title).padding(.top, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            Text("@" + sessionManager.authUsername).font(.title).padding(.top, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                             Text(user.State +  ", " + user.Country).font(.caption)
                         }
                     }

@@ -12,7 +12,8 @@ import AmplifyPlugins
 @main
 struct Prayer_AppApp: App {
     
-    @ObservedObject var authSessionManager = AuthSessionManager()
+    @ObservedObject var authSessionManager = AuthSessionManager() //tomdo: change to StateObject?
+    
     
     init() {
         configureAmplify()

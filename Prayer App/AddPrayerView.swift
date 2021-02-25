@@ -9,7 +9,7 @@ import SwiftUI
 import Amplify
 
 struct AddPrayerView: View {
-    @Binding var sessionData: SessionData
+    @Binding var sessionDataPrayers: [Prayer]
     var user : AuthUser
     @Binding var showAddPrayerView: Bool
 
@@ -77,9 +77,8 @@ struct AddPrayerView: View {
                     AWS_Backend.shared.createPrayer(Prayer: prayer)
 
                     // add the new Prayer in our sessionData, this will refresh UI
-                    var tempList = self.sessionData.prayers
-                    tempList.append(prayer)
-                    sessionData.prayers = tempList
+//                    withAnimation{ self.sessionData.prayers.append(prayer)  }
+                    self.sessionDataPrayers.append(prayer)
                     
                     showAddPrayerView = false
                 }) {

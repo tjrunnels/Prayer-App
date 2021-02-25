@@ -14,6 +14,8 @@ import SwiftUI
 
 
 class AWS_Backend : ObservableObject {
+    
+    
     static let shared = AWS_Backend()
     static func initialize() -> AWS_Backend {
         return .shared
@@ -27,36 +29,37 @@ class AWS_Backend : ObservableObject {
     
 
     // change our internal state, this triggers an UI update on the main thread
-    func updateSessionData(withSignInStatus status : Bool) {
+    func updateSessionData(withSignInStatus status : Bool, sessionDataPrayers: Binding<[Prayer]>) {
         DispatchQueue.main.async() {
-            let sessionData : SessionData = .shared
-            sessionData.isSignedIn = status
+            
             
             // when user is signed in, query the database, otherwise empty our model
             if status {
-                self.queryPrayers()
-                print("sessionData updated, prayers: \(sessionData.prayers.count)")
+                self.queryPrayers(sessionDataPrayers: sessionDataPrayers)
+                print("sessionData updated, prayers: \(sessionDataPrayers.wrappedValue.count)")
             } else {
-                sessionData.prayers = []
-                print("sessionData updated, prayers: \(sessionData.prayers.count)")
+                //self.sessionData.prayers = []
+                print("sessionData updated, prayers: \(sessionDataPrayers.wrappedValue.count)")
             }
         }
     }
     
-    func updateSessionData(withError error : String) {
-        DispatchQueue.main.async() {
-            let sessionData : SessionData = .shared
-            sessionData.currentError = error
-            
-        }
-    }
+    
+//
+//    func updateSessionData(withError error : String) {
+//        DispatchQueue.main.async() {
+//            let sessionData : SessionData = .shared
+//            sessionData.currentError = error
+//
+//        }
+//    }
 
     
     
     
     // MARK: - API Access
 
-       func queryPrayers() {
+    func queryPrayers(sessionDataPrayers: Binding<[Prayer]>) {
         _ = Amplify.API.query(request: .list(PrayerData.self)) { event in
                switch event {
                case .success(let result):
@@ -69,7 +72,7 @@ class AWS_Backend : ObservableObject {
                            let prayer = Prayer.init(from: n)
                             
                            DispatchQueue.main.async() {
-                               SessionData.shared.prayers.append(prayer)
+                            sessionDataPrayers.wrappedValue.append(prayer)
                            }
                        }
 
