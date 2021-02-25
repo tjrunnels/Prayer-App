@@ -9,8 +9,9 @@ import SwiftUI
 import Amplify
 
 struct AddPrayerView: View {
-    var sessionData: SessionData
+    @Binding var sessionData: SessionData
     var user : AuthUser
+    @Binding var showAddPrayerView: Bool
 
     @State var name : String        = "New Prayer"
     @State var description : String = "This is a new Prayer"
@@ -18,6 +19,7 @@ struct AddPrayerView: View {
     @State var image : UIImage?
     @State var showCaptureImageView = false
     
+
     
     var body: some View {
         Form {
@@ -75,7 +77,11 @@ struct AddPrayerView: View {
                     AWS_Backend.shared.createPrayer(Prayer: prayer)
 
                     // add the new Prayer in our sessionData, this will refresh UI
-                    withAnimation { self.sessionData.Prayers.append(prayer) }
+                    var tempList = self.sessionData.prayers
+                    tempList.append(prayer)
+                    sessionData.prayers = tempList
+                    
+                    showAddPrayerView = false
                 }) {
                     Text("Create this Prayer")
                 }

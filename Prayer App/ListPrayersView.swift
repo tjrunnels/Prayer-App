@@ -15,7 +15,15 @@ struct ListPrayersView: View {
     
     @State var updateNowPlz : Bool = false
     @State var showAddPrayerView = false
-
+    
+    let listofBadgeLists : [[PrayerBadgeType]] = [
+        [.saved, .twoOrMore],
+        [.answered, .twoOrMore],
+        [.saved, .answered],
+        [.saved, .twoOrMore, .answered],
+        [.answered],
+        [.twoOrMore]
+    ]
     
     var body: some View {
         
@@ -24,25 +32,30 @@ struct ListPrayersView: View {
                 NavigationView {
                     ZStack{
                     List {
-                        ForEach(sessionData.Prayers) { prayer in
-                            
-                            if(prayer.createdBy == user.username) {
-                                NavigationLink(destination: IndividualPrayerView(prayer: prayer)){
-                                    ListRow(prayer: prayer)
+                        Section(header: ListHeader()) {
+                            ForEach(sessionData.prayers) { prayer in
+                                let number = Int.random(in: 0..<6) //tomdo: replace with actauly badge earnings
+                                if(prayer.createdBy == user.username) {
+                                    NavigationLink(destination: IndividualPrayerView(prayer: prayer)){
+                                        ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
+                                    }
                                 }
-                            }
-                           
-                        }.onDelete { indices in
-                            indices.forEach {
-                                // removing from session data will refresh UI
-                                let Prayer = self.sessionData.Prayers.remove(at: $0)
+                               
+                            }.onDelete { indices in
+                                indices.forEach {
+                                    // removing from session data will refresh UI
+                                    let Prayer = self.sessionData.prayers.remove(at: $0)
 
-                                // asynchronously remove from database
-                                AWS_Backend.shared.deletePrayer(Prayer: Prayer)
-                            }
+                                    // asynchronously remove from database
+                                    AWS_Backend.shared.deletePrayer(Prayer: Prayer)
+                                    
+                                    
+                                }
+                        }
                         }
                     }
-                    .navigationBarTitle(Text("My Feed"))
+                    .listStyle(InsetGroupedListStyle())
+                    .navigationBarTitle(Text("My Feed" + String(self.sessionData.prayers.count)))
                         VStack {
                             Spacer()
 
@@ -68,7 +81,7 @@ struct ListPrayersView: View {
                                         y: 3)
                                 
                             }.sheet(isPresented: $showAddPrayerView) {
-                                AddPrayerView(sessionData: self.sessionData, user: user)
+                                AddPrayerView(sessionData: $sessionData, user: user, showAddPrayerView: $showAddPrayerView)
                             }
                         }
                 }
@@ -93,6 +106,14 @@ struct ListPrayersView: View {
 //}
 
 
+struct ListHeader: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "person.fill")
+            Text("My Prayers")
+        }
+    }
+}
 
 
 
@@ -101,7 +122,7 @@ struct ListPrayersView: View {
 struct ListRow: View {
     @ObservedObject var prayer : Prayer
     
-    var myBadges: [Int] = [1,2,3]
+    var myBadges: [PrayerBadgeType]
     
     var body: some View {
 
@@ -122,7 +143,7 @@ struct ListRow: View {
                 
                 
                
-                HStack {
+                VStack(alignment: .leading) {
                     if ((prayer.description) != nil) {
                         if(prayer.description!.count > 50) {
                             Text(prayer.description!.prefix(50) + "...")
@@ -133,13 +154,15 @@ struct ListRow: View {
                         }
                        
                     }
-                    Spacer()
-                    
+                    Spacer(minLength: 15)
                     //badges
                     HStack {
-                        myBadges.contains(1) ? PrayerBadge(image: Image(systemName: "checkmark.circle")) : nil
-                        myBadges.contains(2) ? PrayerBadge(image: Image(systemName: "person.3")) : nil
-                        myBadges.contains(3) ? PrayerBadge(image: Image(systemName: "sun.max")) : nil
+                        ForEach(myBadges, id: \.self) { thisType in
+                            PrayerBadge(type: thisType)
+                        }
+
+                       
+
                     }
                 }
 
@@ -164,8 +187,8 @@ struct ListRow_Previews: PreviewProvider {
     static var previews: some View {
         
         List {
-            ListRow(prayer: Prayer(id : UUID().uuidString, name: "Grinders Hunger for Wisdom", description: "That they would seek it like silver"))
-            ListRow(prayer: Prayer(id : UUID().uuidString, name: "Will's Stars subscription", description: "Hope he figures it out the information he is looking for in this jounrey"))
+            ListRow(prayer: Prayer(id : UUID().uuidString, name: "Grinders Hunger for Wisdom", description: "That they would seek it like silver"), myBadges: [.saved, .answered])
+            ListRow(prayer: Prayer(id : UUID().uuidString, name: "Will's Stars subscription", description: "Hope he figures it out the information he is looking for in this jounrey"),  myBadges: [.saved, .answered, .twoOrMore])
         }
         .previewLayout(.fixed(width:400, height:250))
         
@@ -174,7 +197,46 @@ struct ListRow_Previews: PreviewProvider {
 }
 
 
+
+
+
 struct PrayerBadge: View {
+    let type: PrayerBadgeType
+    
+    var body: some View{
+        return ZStack {
+//            RoundedRectangle(cornerRadius: 4)
+//                .fill(Color.gray)
+//                .frame(width: 25, height: 25, alignment:.center)
+                
+            switch (type) {
+            case .saved:
+                PrayerBadgeIcon(image: Image(systemName: "checkmark.circle"))
+            case .twoOrMore:
+                PrayerBadgeIcon(image: Image(systemName: "person.3"))
+            case .answered:
+                PrayerBadgeIcon(image: Image(systemName: "sun.max"))
+            default:
+                PrayerBadgeIcon(image: Image(systemName: "xmark.octagon"))
+            }
+
+        }
+    }
+
+}
+
+enum PrayerBadgeType  {
+    case saved
+    case twoOrMore
+    case answered
+    case inGroup
+    case inPrivate
+    case inBody
+    case inFriends
+}
+
+
+struct PrayerBadgeIcon: View {
     let image: Image
     
     
@@ -191,4 +253,5 @@ struct PrayerBadge: View {
     }
 
 }
+
 

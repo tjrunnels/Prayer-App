@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UserView: View {
     let user: User
+    @EnvironmentObject var sessionManager : AuthSessionManager
+
     
     var body: some View {
         ZStack {
@@ -40,7 +42,8 @@ struct UserView: View {
                         
                         //add friend button
                         Button(action: {
-                            print("adding " + user.username + " as friend...")
+                            print("Signing Out")
+                            sessionManager.signOut()
                         }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 5)
@@ -48,7 +51,7 @@ struct UserView: View {
                                     .frame(width: 150, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 HStack {
                                     Image(systemName: "person.badge.plus")
-                                    Text("Add Friend")
+                                    Text("Sign Out")
                                 }
                             }
                         }

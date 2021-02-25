@@ -12,10 +12,10 @@ struct IndividualPrayerView: View {
     
     var myBadges: [Int] = [1,2,3]
 
-    
+
     var body: some View {
         
-        ZStack {
+        ZStack (alignment: .topLeading) {
 //            Rectangle()
 //                .frame(width: .infinity, height: .infinity, alignment: .center)
 //                .ignoresSafeArea(.all, edges: .all)
@@ -89,26 +89,38 @@ struct IndividualPrayerView: View {
           
                 
     
-                
-                Text("Actions")
-                    .font(.title3)
-                    .bold()
-                    .foregroundColor(.black)
-                    .padding([.top, .leading], /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-                    .padding(.bottom, 1)
-
-                //badges
-                HStack {
-                    myBadges.contains(1) ? ActionButton(image: Image(systemName: "checkmark.circle"), pressable: true, thisTitle: "Save to List") : nil
-                    myBadges.contains(2) ? ActionButton(image: Image(systemName: "person.3"), pressable: true, thisTitle: "Prayed For") : nil
-                    myBadges.contains(3) ? ActionButton(image: Image(systemName: "sun.max"), pressable: false, thisTitle: "Add Answer") : nil
-                }
+//
+//                Text("Actions")
+//                    .font(.title3)
+//                    .bold()
+//                    .foregroundColor(.black)
+//                    .padding([.top, .leading], /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+//                    .padding(.bottom, 1)
+//
+//                //badges
+//                HStack {
+//                    myBadges.contains(1) ? ActionButton(image: Image(systemName: "checkmark.circle"), pressable: true, thisTitle: "Save to List") : nil
+//                    myBadges.contains(2) ? ActionButton(image: Image(systemName: "person.3"), pressable: true, thisTitle: "Prayed For") : nil
+//                    myBadges.contains(3) ? ActionButton(image: Image(systemName: "sun.max"), pressable: false, thisTitle: "Add Answer") : nil
+//                }
                 Spacer()
             }
             
             .multilineTextAlignment(.leading)
             .padding(.top, -30) //tomdo: should prob not have this... idk why the defualt is so low tho
-            
+            .toolbar(content: {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Image(systemName: "star")
+                    })
+                    Spacer()
+                    Button("Answer") {}
+                    Spacer()
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Image(systemName: "trash")
+                    })
+                }
+            })
             
             
         }

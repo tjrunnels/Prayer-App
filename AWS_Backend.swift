@@ -35,10 +35,10 @@ class AWS_Backend : ObservableObject {
             // when user is signed in, query the database, otherwise empty our model
             if status {
                 self.queryPrayers()
-                print("sessionData updated, prayers: \(sessionData.Prayers.count)")
+                print("sessionData updated, prayers: \(sessionData.prayers.count)")
             } else {
-                sessionData.Prayers = []
-                print("sessionData updated, prayers: \(sessionData.Prayers.count)")
+                sessionData.prayers = []
+                print("sessionData updated, prayers: \(sessionData.prayers.count)")
             }
         }
     }
@@ -69,7 +69,7 @@ class AWS_Backend : ObservableObject {
                            let prayer = Prayer.init(from: n)
                             
                            DispatchQueue.main.async() {
-                               SessionData.shared.Prayers.append(prayer)
+                               SessionData.shared.prayers.append(prayer)
                            }
                        }
 

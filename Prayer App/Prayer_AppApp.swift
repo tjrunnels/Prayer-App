@@ -12,12 +12,12 @@ import AmplifyPlugins
 @main
 struct Prayer_AppApp: App {
     
-    @ObservedObject var sessionManager = AuthSessionManager()
+    @ObservedObject var authSessionManager = AuthSessionManager()
     
     init() {
         configureAmplify()
         //ackend.shared.signOut()
-        sessionManager.getCurrentAuthUser()
+        authSessionManager.getCurrentAuthUser()
     }
     
     private func configureAmplify() {
@@ -37,19 +37,19 @@ struct Prayer_AppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            switch sessionManager.authState {
+            switch authSessionManager.authState {
             case .login:
                 LoginView()
-                    .environmentObject(sessionManager)
+                    .environmentObject(authSessionManager)
             case .signUp:
                 SignUpView()
-                    .environmentObject(sessionManager)
+                    .environmentObject(authSessionManager)
             case .confirmCode(let username):
                 ConfirmationView(username: username)
-                    .environmentObject(sessionManager)
+                    .environmentObject(authSessionManager)
             case .session(let user):
                 MainTabView(user: user)
-                    .environmentObject(sessionManager)
+                    .environmentObject(authSessionManager)
             }
         }
     }

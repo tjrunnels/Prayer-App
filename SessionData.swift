@@ -10,10 +10,11 @@ import Amplify
 
 // singleton object to store session data
 class SessionData : ObservableObject {
+    
     private init() {}
-    static let shared = SessionData()
+    static var shared = SessionData()
 
-    @Published var Prayers : [Prayer] = []
+    @Published var prayers : [Prayer] = []
     @Published var isSignedIn : Bool = false
     @Published var currentError : String = ""
 }

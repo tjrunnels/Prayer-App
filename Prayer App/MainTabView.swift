@@ -9,10 +9,11 @@ import SwiftUI
 import Amplify
 
 struct MainTabView: View {
-    @EnvironmentObject var sessionManager : AuthSessionManager
+    @EnvironmentObject var authSessionManager : AuthSessionManager
     @ObservedObject private var sessionData: SessionData = .shared
 
     let user: AuthUser
+    @State var showAdd: Bool = true
     
     init(user: AuthUser) {
         AWS_Backend.shared.updateSessionData(withSignInStatus: true)
@@ -21,17 +22,20 @@ struct MainTabView: View {
     
     var body: some View {
         TabView{
-            AddPrayerView(sessionData: self.sessionData, user: user)
+            UserView (user: prayerUser)
                 .tabItem {
-                    Image(systemName: "text.bubble")
-                    Text("Prayer")
+                    Image(systemName: "person.2.circle")
+                    Text("User")
                 }
-            ListPrayersView( user: user)
+                .environmentObject(authSessionManager)
+            
+            
+            ListPrayersView(user: user)
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("List")
                 }
-                .environmentObject(sessionManager)
+                .environmentObject(authSessionManager)
 //            AccountView (user: user)
 //                .tabItem {
 //                    Image(systemName: "person.crop.circle")
@@ -39,11 +43,7 @@ struct MainTabView: View {
 //                }
 //                .environmentObject(sessionManager)
             
-            UserView (user: prayerUser)
-                .tabItem {
-                    Image(systemName: "person.2.circle")
-                    Text("User")
-                }
+           
             
         }
     }

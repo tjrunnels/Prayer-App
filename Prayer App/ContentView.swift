@@ -71,7 +71,7 @@ func prepareTestData() -> SessionData {
     n1.image = Image(systemName: n1.imageName!)
     n2.image = Image(systemName: n2.imageName!)
 
-    sessionData.Prayers = [ n1, n2 ]
+    sessionData.prayers = [ n1, n2 ]
 
     return sessionData
 }
