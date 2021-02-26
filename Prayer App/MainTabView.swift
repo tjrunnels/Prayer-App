@@ -15,14 +15,13 @@ struct MainTabView: View {
     let user: AuthUser
     @State var showAdd: Bool = true
     
-    init(user: AuthUser) {
-        self.user = user
-        //bug here ^ No ObservableObject of type SessionData found even tho PrayerAppApp clearly has it
-    }
+    
+    
+ 
     
     var body: some View {
         TabView{
-            UserView (user: prayerUser)
+            UserView (user: self.user)
                 .tabItem {
                     Image(systemName: "person.2.circle")
                     Text("User")
@@ -47,7 +46,6 @@ struct MainTabView: View {
            
             
         }
-        .onAppear(perform: sessionData.updatePrayersFromAWS)
     }
 }
 

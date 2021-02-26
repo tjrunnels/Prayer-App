@@ -8,6 +8,26 @@
 import SwiftUI
 import Amplify
 
+
+struct listReadyPrayer: Hashable, Identifiable {
+    let id: String
+    var title: String
+    var description: String?
+    var userID: String
+
+    
+    init(prayer: Prayer) {
+        self.id = prayer.id
+        self.title = prayer.title
+        self.userID = prayer.userID
+        if(prayer.description != nil) {
+            self.description = prayer.description
+        }
+    }
+    
+}
+
+
 struct ListPrayersView: View {
     @EnvironmentObject var sessionManager : AuthSessionManager
     @EnvironmentObject var sessionData : SessionData
@@ -15,6 +35,8 @@ struct ListPrayersView: View {
     
     @State var updateNowPlz : Bool = false
     @State var showAddPrayerView = false
+    
+    var listReadyPrayers : [listReadyPrayer]?
     
 
     
@@ -35,13 +57,13 @@ struct ListPrayersView: View {
                     ZStack{
                     List {
                         Section(header: ListHeader()) {
-                            ForEach(sessionData.prayers) { prayer in
+                            ForEach(listReadyPrayers ?? []) { listReadyPrayers in
                                 let number = Int.random(in: 0..<6) //tomdo: replace with actauly badge earnings
-                                if(prayer.createdBy == user.username) {
-                                    NavigationLink(destination: IndividualPrayerView(prayer: prayer)){
-                                        ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
-                                    }
-                                }
+//                                if(prayer.userID == user.userId) {
+//                                    NavigationLink(destination: IndividualPrayerView(prayer: listReadyPrayers)){
+                                        ListRow(prayer: listReadyPrayers, myBadges: listofBadgeLists[number])
+//                                    }
+                                
                                
                             }.onDelete { indices in
                                 indices.forEach {
@@ -49,7 +71,7 @@ struct ListPrayersView: View {
                                     let Prayer = self.sessionData.prayers.remove(at: $0)
 
                                     // asynchronously remove from database
-                                    AWS_Backend.shared.deletePrayer(Prayer: Prayer)
+                                    //AWS_Backend.shared.deletePrayer(Prayer: Prayer)
                                     
                                     
                                 }
@@ -57,7 +79,7 @@ struct ListPrayersView: View {
                         }
                     }
                     .listStyle(InsetGroupedListStyle())
-                    .navigationBarTitle(Text("My Feed" + String(self.sessionData.prayers.count)))
+                    .navigationBarTitle(Text("My Feed" + String(sessionData.prayers.count)))
                         VStack {
                             Spacer()
 
@@ -96,6 +118,7 @@ struct ListPrayersView: View {
         
     }//end of view
     
+    
 }//end of struct
 
 //struct ListPrayersView_Previews: PreviewProvider {
@@ -122,7 +145,7 @@ struct ListHeader: View {
 
 // a view to represent a single list item
 struct ListRow: View {
-    @ObservedObject var prayer : Prayer
+    var prayer : listReadyPrayer //tomdo: change this type to something good idk
     
     var myBadges: [PrayerBadgeType]
     
@@ -131,15 +154,15 @@ struct ListRow: View {
         return HStack(alignment: .center, spacing: 5.0) {
 
             // if there is an image, display it on the left
-            if (prayer.image != nil) {
-                prayer.image!
-                .resizable()
-                .frame(width: 50, height: 50)
-            }
+//            if (prayer.image != nil) {
+//                prayer.image!
+//                .resizable()
+//                .frame(width: 50, height: 50)
+//            }
 
             // the right part is a vertical stack with the title and description
             VStack(alignment: .leading, spacing: 5.0) {
-                Text(prayer.name)
+                Text(prayer.title)
                     .bold()
                     .font(.title3)
                 
@@ -183,20 +206,34 @@ struct ListRow: View {
     }
 }
 
-struct ListRow_Previews: PreviewProvider {
- 
-    
-    static var previews: some View {
-        
-        List {
-            ListRow(prayer: Prayer(id : UUID().uuidString, name: "Grinders Hunger for Wisdom", description: "That they would seek it like silver"), myBadges: [.saved, .answered])
-            ListRow(prayer: Prayer(id : UUID().uuidString, name: "Will's Stars subscription", description: "Hope he figures it out the information he is looking for in this jounrey"),  myBadges: [.saved, .answered, .twoOrMore])
-        }
-        .previewLayout(.fixed(width:400, height:250))
-        
-    }
-    
-}
+
+
+//struct ListRow_Previews: PreviewProvider {
+//
+//
+//    static var previews: some View {
+//
+//        List {
+//            ListRow(prayer: listReadyPrayer(prayer: Prayer(
+//                id : UUID().uuidString,
+//                title: "Grinders Hunger for wisdom",
+//                description: "That they would seek it like silver",
+//                userID: "ID_tom_runnels"
+//                ), myBadges: [.saved, .answered]) )
+//
+//            ListRow(prayer: listReadyPrayer(prayer: Prayer(
+//                id : UUID().uuidString,
+//                title: "Will's Stars subscription",
+//                description: "Hope he figures it out the information he is looking for in this jounrey",
+//                userID: "ID_tom_runnels"
+//                ), myBadges: [.saved, .answered, .twoOrMore]) )
+//
+//        }
+//        .previewLayout(.fixed(width:400, height:250))
+//
+//    }
+//
+//}
 
 
 

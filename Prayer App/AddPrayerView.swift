@@ -13,7 +13,7 @@ struct AddPrayerView: View {
     var user : AuthUser
     @Binding var showAddPrayerView: Bool
 
-    @State var name : String        = "New Prayer"
+    @State var title : String        = "New Prayer"
     @State var description : String = "This is a new Prayer"
     
     @State var image : UIImage?
@@ -25,8 +25,8 @@ struct AddPrayerView: View {
         Form {
 
             Section(header: Text("TEXT")) {
-                TextField("Name", text: $name)
-                TextField("Name", text: $description)
+                TextField("Title", text: $title)
+                TextField("Description", text: $description)
             }
 
             Section(header: Text("PICTURE")) {
@@ -56,31 +56,45 @@ struct AddPrayerView: View {
             Section {
                 Button(action: {
 
-                    let prayer = Prayer(id : UUID().uuidString,
-                                    name: self.$name.wrappedValue,
+                    var prayer = Prayer(id : UUID().uuidString,
+                                    title: self.$title.wrappedValue,
                                     description: self.$description.wrappedValue,
-                                    createdBy: self.user.username
+                                    userID: self.user.userId
                                     
                                     
                     )
                     print("testing with: \(self.user.username)")
-
+                    
+                    
+                    //tomdo: this doesn't make sense but whatever
                     if let i = self.image  {
-                        prayer.imageName = UUID().uuidString
-                        prayer.image = Image(uiImage: i)
-
-                        // asynchronously store the image (and assume it will work)
-                        AWS_Backend.shared.storeImage(name: prayer.imageName!, image: (i.pngData())!)
+                        prayer.image = UUID().uuidString
+                        //prayer.image = Image(uiImage: i)
+                    }
+                    
+                    //datastoredo:  Fatal error: DataStore category is not configured. Call Amplify.configure() before using any methods on the category
+                    let item = Prayer(
+                        title: self.title,
+                        description: self.description,
+                        image: nil, //tomdo, fix with image
+                        badges: [],
+                        Answers: [],
+                        groupID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
+                        userID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
+                        update: [])
+                    Amplify.DataStore.save(item) { result in
+                        switch(result) {
+                        case .success(let savedItem):
+                            print("Saved item: \(savedItem.id)")
+                        case .failure(let error):
+                            print("Could not save item to DataStore: \(error)")
+                        }
                     }
 
-                    // asynchronously store the Prayer (and assume it will succeed)
-                    AWS_Backend.shared.createPrayer(Prayer: prayer)
-
                     // add the new Prayer in our sessionData, this will refresh UI
-//                    withAnimation{ self.sessionData.prayers.append(prayer)  }
                     self.sessionDataPrayers.append(prayer)
-                    
                     showAddPrayerView = false
+                    
                 }) {
                     Text("Create this Prayer")
                 }

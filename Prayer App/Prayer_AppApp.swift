@@ -42,12 +42,13 @@ struct Prayer_AppApp: App {
   
             switch (sessionData.currentUser != nil) {
                 case true:
-                    MainTabView(user: sessionData.currentUser as! AuthUser)
+                    MainTabView(user: sessionData.currentUser!)
                         .environmentObject(authSessionManager)
                 default:
                     LoginView { user in
                         sessionData.currentUser = user
                     }
+                    
             }
             
             

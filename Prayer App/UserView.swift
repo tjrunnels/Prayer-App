@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import Amplify
 
 struct UserView: View {
-    let user: User
+    let user: AuthUser
     @EnvironmentObject var sessionManager : AuthSessionManager
 
     
@@ -34,8 +35,7 @@ struct UserView: View {
                     HStack{
                         Circle().frame(width: 80, height: 80, alignment: .leading)
                         VStack{
-                            Text("@" + sessionManager.authUsername).font(.title).padding(.top, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-                            Text(user.State +  ", " + user.Country).font(.caption)
+                            Text("@" + user.username).font(.title).padding(.top, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                         }
                     }
                     HStack{
@@ -81,13 +81,19 @@ struct UserView: View {
 //var isDonor: Bool
 //var iconName: String
 
-struct UserView_Previews: PreviewProvider {
 
-    static var previews: some View {
-        Group {
-            UserView(user: prayerUser)
-                
-                
-        }
-    }
-}
+//tomdo: fix and uncomment
+//struct UserView_Previews: PreviewProvider {
+//
+//    private struct leDummyUser: AuthUser {
+//       let userId: String = "1"
+//       let username: String = "dummyUser"
+//   }
+//
+//    static var previews: some View {
+//        Group {
+//            UserView(user: leDummyUser)
+//
+//        }
+//    }
+//}
