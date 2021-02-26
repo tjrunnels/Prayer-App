@@ -13,12 +13,13 @@ import AmplifyPlugins
 struct Prayer_AppApp: App {
     
     @ObservedObject var authSessionManager = AuthSessionManager() //tomdo: change to StateObject?
-    
+    @ObservedObject var sessionData = SessionData()
+
     
     init() {
         configureAmplify()
         //ackend.shared.signOut()
-        authSessionManager.getCurrentAuthUser()
+        //authSessionManager.getCurrentAuthUser()
     }
     
     private func configureAmplify() {
@@ -38,20 +39,37 @@ struct Prayer_AppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            switch authSessionManager.authState {
-            case .login:
-                LoginView()
-                    .environmentObject(authSessionManager)
-            case .signUp:
-                SignUpView()
-                    .environmentObject(authSessionManager)
-            case .confirmCode(let username):
-                ConfirmationView(username: username)
-                    .environmentObject(authSessionManager)
-            case .session(let user):
-                MainTabView(user: user)
-                    .environmentObject(authSessionManager)
+  
+            switch (sessionData.currentUser != nil) {
+                case true:
+                    MainTabView(user: sessionData.currentUser as! AuthUser)
+                        .environmentObject(authSessionManager)
+                default:
+                    LoginView { user in
+                        sessionData.currentUser = user
+                    }
             }
+            
+            
+//            switch authSessionManager.authState {
+//            case .login:
+//                LoginView()
+//                    .environmentObject(authSessionManager)
+//            case .signUp:
+//                SignUpView()
+//                    .environmentObject(authSessionManager)
+//            case .confirmCode(let username):
+//                ConfirmationView(username: username)
+//                    .environmentObject(authSessionManager)
+//            case .session(let user):
+//                MainTabView(user: user)
+//                    .environmentObject(authSessionManager)
+//            }
+            
+            
+            
+            
+            
         }
     }
 }

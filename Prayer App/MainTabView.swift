@@ -51,10 +51,7 @@ struct MainTabView: View {
     }
 }
 
-extension MainTabView {
-        
-    
-}
+
 
 struct MainTabView_Previews: PreviewProvider {
     private struct leDummyUser: AuthUser {
