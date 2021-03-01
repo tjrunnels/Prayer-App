@@ -20,6 +20,7 @@ struct Prayer_AppApp: App {
         configureAmplify()
         //ackend.shared.signOut()
         //authSessionManager.getCurrentAuthUser()
+        sessionData.currentUser = Amplify.Auth.getCurrentUser()
     }
     
     private func configureAmplify() {
@@ -29,6 +30,10 @@ struct Prayer_AppApp: App {
         try Amplify.add(plugin: AWSCognitoAuthPlugin())
         try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: AmplifyModels()))
         try Amplify.add(plugin: AWSS3StoragePlugin())
+        
+        let datastorePlugin = AWSDataStorePlugin(modelRegistration: AmplifyModels())
+        try Amplify.add(plugin: datastorePlugin);
+        
         try Amplify.configure()
         print("Initialized Amplify");
       } catch {

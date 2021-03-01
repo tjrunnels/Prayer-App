@@ -84,6 +84,7 @@ extension LoginView {
             //Sign in failed AuthError: There is already a user which is signed in. Please log out the user before calling showSignIn.
             //Recovery suggestion: Operation performed is not a valid operation for the current auth state
             //from (1)
+            
             Amplify.Auth.signIn(username: username, password: password)
                 .resultPublisher
                 .sink {

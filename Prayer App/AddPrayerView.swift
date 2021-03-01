@@ -78,10 +78,11 @@ struct AddPrayerView: View {
                         description: self.description,
                         image: nil, //tomdo, fix with image
                         badges: [],
+                        update: [],
+                        prayergroupID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
                         Answers: [],
-                        groupID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
-                        userID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
-                        update: [])
+                        userID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d"
+                        )
                     Amplify.DataStore.save(item) { result in
                         switch(result) {
                         case .success(let savedItem):
