@@ -32,6 +32,7 @@
 		1B9086AC25ED56B60022B504 /* PrayerGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9086A125ED56B50022B504 /* PrayerGroup.swift */; };
 		1B9086AD25ED56B60022B504 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9086A225ED56B50022B504 /* Answer.swift */; };
 		1B9086AE25ED56B60022B504 /* Prayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9086A325ED56B50022B504 /* Prayer.swift */; };
+		1B9086B025ED79540022B504 /* ListSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9086AF25ED79540022B504 /* ListSections.swift */; };
 		1BCC876125718E05008AEB72 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCC876025718E05008AEB72 /* MainTabView.swift */; };
 		1BD35615257557C800F75451 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1BD35614257557C800F75451 /* README.txt */; };
 		1BE46087255EE3CD00576087 /* Prayer_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE46086255EE3CD00576087 /* Prayer_AppApp.swift */; };
@@ -92,6 +93,7 @@
 		1B9086A125ED56B50022B504 /* PrayerGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerGroup.swift; sourceTree = "<group>"; };
 		1B9086A225ED56B50022B504 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		1B9086A325ED56B50022B504 /* Prayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prayer.swift; sourceTree = "<group>"; };
+		1B9086AF25ED79540022B504 /* ListSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSections.swift; sourceTree = "<group>"; };
 		1BCC876025718E05008AEB72 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		1BD35614257557C800F75451 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		1BE46083255EE3CD00576087 /* Prayer App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Prayer App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,6 +231,7 @@
 				1BE4608F255EE3CF00576087 /* Info.plist */,
 				1BE4608C255EE3CF00576087 /* Preview Content */,
 				1BE46088255EE3CD00576087 /* ContentView.swift */,
+				1B9086AF25ED79540022B504 /* ListSections.swift */,
 			);
 			path = "Prayer App";
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				1BE521E52566BC4C001A365F /* SessionView.swift in Sources */,
 				1B8DDB182565800E00ADCB93 /* SignUpView.swift in Sources */,
 				1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */,
+				1B9086B025ED79540022B504 /* ListSections.swift in Sources */,
 				1B09934725DDBBF600F26512 /* DataHandler.swift in Sources */,
 				1B59B2752572D6B900E290F6 /* SessionData.swift in Sources */,
 				1BCC876125718E05008AEB72 /* MainTabView.swift in Sources */,

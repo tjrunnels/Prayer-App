@@ -9,25 +9,6 @@ import SwiftUI
 import Amplify
 
 
-struct listReadyPrayer: Hashable, Identifiable {
-    let id: String
-    var title: String
-    var description: String?
-    var userID: String
-
-    
-    init(prayer: Prayer) {
-        self.id = prayer.id
-        self.title = prayer.title
-        self.userID = prayer.userID
-        if(prayer.description != nil) {
-            self.description = prayer.description
-        }
-    }
-    
-}
-
-
 struct ListPrayersView: View {
     @EnvironmentObject var sessionManager : AuthSessionManager
     @EnvironmentObject var sessionData : SessionData
@@ -36,9 +17,7 @@ struct ListPrayersView: View {
     @State var updateNowPlz : Bool = false
     @State var showAddPrayerView = false
     
-    var listReadyPrayers : [listReadyPrayer]?
     
-
     
     let listofBadgeLists : [[PrayerBadgeType]] = [
         [.saved, .twoOrMore],
@@ -73,42 +52,12 @@ struct ListPrayersView: View {
                 NavigationView {
                     ZStack{
                     List {
-//                        Section(header: ListHeader()) {
-//
-//                            ForEach(sessionData.prayers) { prayer in
-//                                let number = Int.random(in: 0..<6) //tomdo: replace with actauly badge earnings
-////                                if(prayer.userID == user.userId) {
-////                                    NavigationLink(destination: IndividualPrayerView(prayer: listReadyPrayers)){
-//                                        ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
-////                                    }
-//
-//                            }.onDelete { indices in
-//                                indices.forEach {
-//                                    // removing from session data will refresh UI
-//                                    let Prayer = self.sessionData.prayers.remove(at: $0)
-//
-//                                    // asynchronously remove from database
-//                                    //AWS_Backend.shared.deletePrayer(Prayer: Prayer)
-//                                    Amplify.DataStore.delete(Prayer) {
-//                                        result in
-//                                        switch(result) {
-//                                        case .success:
-//                                            print("Deleted item: \(Prayer.id)")
-//                                        case .failure(let error):
-//                                            print("Could not update data in Datastore: \(error)")
-//                                        }
-//                                    }
-//
-//                                }
-//                            }
-//                        }
-                        
                         MyPrayersSection(prayers: $sessionData.prayers, user: user)
                         OthersPrayersSection(prayers: $sessionData.prayers, user: user)
 
                     }
                     .listStyle(InsetGroupedListStyle())
-                    .navigationBarTitle(Text("My Feed" + String(sessionData.prayers.count)))
+                    .navigationBarTitle(Text("Feed: " + user.userId))
                         VStack {
                             Spacer()
                             HStack {
@@ -162,115 +111,6 @@ struct ListHeader: View {
     }
 }
 
-struct MyPrayersSection: View {
-    
-    @Binding var prayers: [Prayer]
-    var user: AuthUser
-    
-    
-    let listofBadgeLists : [[PrayerBadgeType]] = [
-        [.saved, .twoOrMore],
-        [.answered, .twoOrMore],
-        [.saved, .answered],
-        [.saved, .twoOrMore, .answered],
-        [.answered],
-        [.twoOrMore]
-    ]
-    
-    var body: some View{
-        Section(header: ListHeader()) {
-            
-            ForEach(prayers) { prayer in
-                let number = Int.random(in: 0..<6) //tomdo: replace with actauly badge earnings
-                   
-                    
-                    //WHAT MAKES THIS UNIQUE
-                    if(prayer.userID == user.userId) {
-                        //NavigationLink(destination: IndividualPrayerView(prayer: prayers)){
-                        ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
-                        //}
-                    }
-
-            }.onDelete { indices in
-                indices.forEach {
-                    // removing from session data will refresh UI
-                    let Prayer = prayers.remove(at: $0)
-
-                    // asynchronously remove from database
-                    //AWS_Backend.shared.deletePrayer(Prayer: Prayer)
-                    Amplify.DataStore.delete(Prayer) {
-                        result in
-                        switch(result) {
-                        case .success:
-                            print("Deleted item: \(Prayer.id)")
-                        case .failure(let error):
-                            print("Could not update data in Datastore: \(error)")
-                        }
-                    }
-                   
-                }
-            }
-        }
-    }
-}
-
-
-struct OthersPrayersSection: View {
-    
-    @Binding var prayers: [Prayer]
-    var user: AuthUser
-    
-    
-    let listofBadgeLists : [[PrayerBadgeType]] = [
-        [.saved, .twoOrMore],
-        [.answered, .twoOrMore],
-        [.saved, .answered],
-        [.saved, .twoOrMore, .answered],
-        [.answered],
-        [.twoOrMore]
-    ]
-    
-    var body: some View{
-        Section(header: HStack {
-            Image(systemName: "person.3")
-            Text("Friends' Prayers")
-        }
-        ) {
-            
-            ForEach(prayers) { prayer in
-                let number = Int.random(in: 0..<6) //tomdo: replace with actauly badge earnings
-                   
-                    
-                    //WHAT MAKES THIS UNIQUE
-                    if(prayer.userID != user.userId && prayer.prayergroupID != nil) {
-                        //NavigationLink(destination: IndividualPrayerView(prayer: prayers)){
-                        ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
-                        //}
-                    }
-
-            }.onDelete { indices in
-                indices.forEach {
-                    // removing from session data will refresh UI
-                    let Prayer = prayers.remove(at: $0)
-
-                    // asynchronously remove from database
-                    //AWS_Backend.shared.deletePrayer(Prayer: Prayer)
-                    Amplify.DataStore.delete(Prayer) {
-                        result in
-                        switch(result) {
-                        case .success:
-                            print("Deleted item: \(Prayer.id)")
-                        case .failure(let error):
-                            print("Could not update data in Datastore: \(error)")
-                        }
-                    }
-                   
-                }
-            }
-        }
-    }
-}
-
 
 
 // a view to represent a single list item
@@ -307,13 +147,11 @@ struct ListRow: View {
                             Text(prayer.description!)
                                 .font(.body)
                         }
+                        Text(prayer.id)
+                            .font(.caption2)
                        
                     }
-                    if ((prayer.userID) != nil) {
-                            Text("@" + prayer.userID)
-                                .font(.body)
-                        }
-                       
+                    
                     
                     Spacer(minLength: 15)
                     //badges
@@ -321,10 +159,9 @@ struct ListRow: View {
                         ForEach(myBadges, id: \.self) { thisType in
                             PrayerBadge(type: thisType)
                         }
-
-                       
-
                     }
+
+                    
                 }
 
                 
@@ -380,10 +217,7 @@ struct PrayerBadge: View {
     
     var body: some View{
         return ZStack {
-//            RoundedRectangle(cornerRadius: 4)
-//                .fill(Color.gray)
-//                .frame(width: 25, height: 25, alignment:.center)
-                
+            
             switch (type) {
             case .saved:
                 PrayerBadgeIcon(image: Image(systemName: "checkmark.circle"))

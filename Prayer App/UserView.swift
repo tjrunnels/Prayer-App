@@ -7,11 +7,17 @@
 
 import SwiftUI
 import Amplify
+import Foundation
+
+
 
 struct UserView: View {
     let user: AuthUser
     @EnvironmentObject var sessionManager : AuthSessionManager
-
+    @State var currentUserInfo: User?
+    
+    
+    
     
     var body: some View {
         ZStack {
@@ -26,7 +32,7 @@ struct UserView: View {
                 
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color("Element"))
-                    .frame(width: UIScreen.main.bounds.size.width, height: 200, alignment: .top)
+                    .frame(width: UIScreen.main.bounds.size.width, height: 250, alignment: .top)
                     .shadow(color: Color("Shadow"), radius: 8, x: 8, y: 8)
                     
                     
@@ -35,7 +41,23 @@ struct UserView: View {
                     HStack{
                         Circle().frame(width: 80, height: 80, alignment: .leading)
                         VStack{
-                            Text("@" + user.username).font(.title).padding(.top, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            
+                            currentUserInfo?.fullName != nil
+                                ? Text(currentUserInfo!.fullName!).font(.title)
+                                : Text("")
+                            
+                            currentUserInfo?.username != nil
+                                ? Text("@" + currentUserInfo!.username!).font(.subheadline)
+                                : Text("Error loading User")
+                            
+                            
+                            currentUserInfo?.location != nil
+                                ? Text(currentUserInfo!.location!).font(.subheadline)
+                                : Text("")
+                            
+                            currentUserInfo?.id != nil
+                                ? Text(currentUserInfo!.id).font(.caption2)
+                                : Text("")
                         }
                     }
                     HStack{
@@ -66,11 +88,70 @@ struct UserView: View {
             
         }
         
-    }
-    }
+        }.onAppear(perform: {
+            print("getting User")
+            
+            Amplify.DataStore.query(User.self).sink {
+                if case let .failure(error) = $0 {
+                       print("Error on query() for type User - \(error.localizedDescription)")
+                   }
+            } receiveValue: { queryUsers in
+                for queryUser in queryUsers {
+                    print("AYO: " + queryUser.id + " vs " + user.userId)
+                    if(queryUser.id != nil && queryUser.id == self.user.userId) {
+                        currentUserInfo = queryUser
+                        print("GOT USER: " + queryUser.id)
+                    }
+                }
+              
+                
+            }
+                    
+            //a3f4095e-39de-43d2-baf4-f8c16f0f6f4d   2784f490-f16f-4375-8efc-2cdf0272e188
+            
+//            Amplify.DataStore.query(User.self, byId: user.userId).sink {
+//                if case let .failure(error) = $0 {
+//                       print("Error on query() for type User - \(error.localizedDescription)")
+//                   }
+//            } receiveValue: { user in
+//                currentUserInfo = user
+//                print("GOT USER! ")
+//            }
+            
+        
+        
+        
+        })
+    }//end of body
+    
     
     
 }
+
+//
+//extension GraphQLRequest {
+//    static func getOneUserInfo(byId id: String) -> GraphQLRequest<User> {
+//        let operationName = "getUser"
+//        let document = """
+//            query getOneUserInfo($id: ID!) {
+//              \(operationName)(id: $id) {
+//                fullName
+//                id
+//                location
+//                username
+//              }
+//            }
+//            """
+//        return GraphQLRequest<User>(document: document,
+//                                    variables: ["id": id],
+//                                    responseType: User.self,
+//                                    decodePath: operationName)
+//    }
+//}
+
+
+
+
 //
 //var id: String
 //var username: String

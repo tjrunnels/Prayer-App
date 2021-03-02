@@ -63,7 +63,7 @@ struct AddPrayerView: View {
                                     
                                     
                     )
-                    print("testing with: \(self.user.username)")
+                    print("Save Prayer pressed as: \(self.user.username)")
                     
                     
                     //tomdo: this doesn't make sense but whatever
@@ -72,16 +72,17 @@ struct AddPrayerView: View {
                         //prayer.image = Image(uiImage: i)
                     }
                     
-                    //datastoredo:  Fatal error: DataStore category is not configured. Call Amplify.configure() before using any methods on the category
+                    
+                    //datastoredo: doesn't seem like its syncing my prayers up with AWS perfectly... is it because i'm telling them the userid?  Should i instead tell them the User.id that i grabbed?  isn't it the same?
                     let item = Prayer(
                         title: self.title,
                         description: self.description,
                         image: nil, //tomdo, fix with image
                         badges: [],
                         update: [],
-                        prayergroupID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
+                        prayergroupID: nil,
                         Answers: [],
-                        userID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d"
+                        userID: user.userId
                         )
                     Amplify.DataStore.save(item) { result in
                         switch(result) {
