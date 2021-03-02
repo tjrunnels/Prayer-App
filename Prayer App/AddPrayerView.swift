@@ -77,11 +77,7 @@ struct AddPrayerView: View {
                     let item = Prayer(
                         title: self.title,
                         description: self.description,
-                        image: nil, //tomdo, fix with image
-                        badges: [],
-                        update: [],
-                        prayergroupID: nil,
-                        Answers: [],
+                        prayergroupID: "null", //for some reason you have to have prayergroupID included important!
                         userID: user.userId
                         )
                     Amplify.DataStore.save(item) { result in
