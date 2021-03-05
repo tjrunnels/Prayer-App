@@ -36,6 +36,15 @@ struct MainTabView: View {
                 }
                 .environmentObject(authSessionManager)
                 .environmentObject(self.sessionData)
+            
+            
+            GroupsView(user: user)
+                .tabItem {
+                    Image(systemName: "person.3.fill")
+                    Text("Groups")
+                }
+                .environmentObject(authSessionManager)
+                .environmentObject(self.sessionData)
 //            AccountView (user: user)
 //                .tabItem {
 //                    Image(systemName: "person.crop.circle")

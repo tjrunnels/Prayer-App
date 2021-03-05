@@ -17,6 +17,8 @@ struct ListPrayersView: View {
     @State var updateNowPlz : Bool = false
     @State var showAddPrayerView = false
     
+    @State var groupIDsToShow : [String] = ["CF4D76DE-924E-4002-8B3C-2200EAFEA123"]
+    
     
     
     let listofBadgeLists : [[PrayerBadgeType]] = [
@@ -30,8 +32,29 @@ struct ListPrayersView: View {
     
     
     
-    func loadPrayerList () {
-        Amplify.DataStore.query(Prayer.self) { result in
+    func loadMyPrayerList () {
+        Amplify.DataStore.query(
+                Prayer.self,
+                where: Prayer.keys.userID == self.user.userId
+            ) { result in
+            do {
+                let thisPrayers = try result.get()
+                print("prayers datastore query results: ")
+                print(thisPrayers)
+                DispatchQueue.main.async {
+                    sessionData.prayers = thisPrayers
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func loadPrayerListByGroup (groupID: String) {
+        Amplify.DataStore.query(
+                Prayer.self,
+                where: Prayer.keys.prayergroupID == groupID
+            ) { result in
             do {
                 let thisPrayers = try result.get()
                 print("prayers datastore query results: ")
@@ -52,9 +75,11 @@ struct ListPrayersView: View {
                 NavigationView {
                     ZStack{
                     List {
-                        MyPrayersSection(prayers: $sessionData.prayers, user: user)
-                        OthersPrayersSection(prayers: $sessionData.prayers, user: user)
-
+                        MyPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
+                        OthersPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
+                        ForEach(groupIDsToShow, id: \.self) { groupid in
+                            GroupPrayerSection(prayers: $sessionData.prayers, groupID: groupid)
+                        }
                     }
                     .listStyle(InsetGroupedListStyle())
                     .navigationBarTitle(Text("Feed: " + user.userId))
@@ -85,37 +110,17 @@ struct ListPrayersView: View {
                 }//zstack
             
             }//end of NavigationView
-                .onAppear(perform: loadPrayerList)
+                .onAppear(perform: loadMyPrayerList)
     }//end of view
     
     
 }//end of struct
 
-//struct ListPrayersView_Previews: PreviewProvider {
-//    let sessionData = SessionData.shared
-//
-//    static var previews: some View {
-//        Text("nope")
-//        //ListPrayersView(userData: self.userData)
-//    }
-//}
-
-
-struct ListHeader: View {
-    
-    var body: some View {
-        HStack {
-            Image(systemName: "person.fill")
-            Text("My Prayers")
-        }
-    }
-}
-
 
 
 // a view to represent a single list item
 struct ListRow: View {
-    var prayer : Prayer //tomdo: change this type to something good idk
+    var prayer : Prayer
     
     var myBadges: [PrayerBadgeType]
     
@@ -147,7 +152,7 @@ struct ListRow: View {
                             Text(prayer.description!)
                                 .font(.body)
                         }
-                        Text(prayer.id)
+                        Text("$ " + prayer.id)
                             .font(.caption2)
                        
                     }
@@ -173,6 +178,7 @@ struct ListRow: View {
 //                    Text("- Anonymous")
 //                        .foregroundColor(Color.gray)
 //                }
+                
             }
         }//end of return
         .padding([.top, .bottom], /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
@@ -181,86 +187,39 @@ struct ListRow: View {
 
 
 
-//struct ListRow_Previews: PreviewProvider {
-//
-//
-//    static var previews: some View {
-//
-//        List {
-//            ListRow(prayer: listReadyPrayer(prayer: Prayer(
-//                id : UUID().uuidString,
-//                title: "Grinders Hunger for wisdom",
-//                description: "That they would seek it like silver",
-//                userID: "ID_tom_runnels"
-//                ), myBadges: [.saved, .answered]) )
-//
-//            ListRow(prayer: listReadyPrayer(prayer: Prayer(
-//                id : UUID().uuidString,
-//                title: "Will's Stars subscription",
-//                description: "Hope he figures it out the information he is looking for in this jounrey",
-//                userID: "ID_tom_runnels"
-//                ), myBadges: [.saved, .answered, .twoOrMore]) )
-//
-//        }
-//        .previewLayout(.fixed(width:400, height:250))
-//
-//    }
-//
-//}
+struct ListRow_Previews: PreviewProvider {
 
 
-
-
-
-struct PrayerBadge: View {
-    let type: PrayerBadgeType
-    
-    var body: some View{
-        return ZStack {
-            
-            switch (type) {
-            case .saved:
-                PrayerBadgeIcon(image: Image(systemName: "checkmark.circle"))
-            case .twoOrMore:
-                PrayerBadgeIcon(image: Image(systemName: "person.3"))
-            case .answered:
-                PrayerBadgeIcon(image: Image(systemName: "sun.max"))
-            default:
-                PrayerBadgeIcon(image: Image(systemName: "xmark.octagon"))
-            }
-
+    static var previews: some View {
+        List {
+            MyPrayersSection(prayers: .constant([
+                    Prayer(
+                        id : UUID().uuidString,
+                        title: "Grinders Hunger for wisdom",
+                        description: "That they would seek it like silver",
+                        userID: "ID_tom_runnels"
+                        ),
+                    Prayer(
+                        id : UUID().uuidString,
+                        title: "Lunch at Papichulo",
+                        description: "It would taste good",
+                        userID: "ID_tom_runnels"
+                        ),
+                    Prayer(
+                        id : UUID().uuidString,
+                        title: "Like literaccy",
+                        description: "cause i can't spell for nothin",
+                        userID: "ID_tom_runnels"
+                        )
+                ]), currentUserID: "ID_tom_runnels"
+            )
         }
+        .listStyle(InsetGroupedListStyle())
+        .previewLayout(.fixed(width:400, height:700))
     }
 
 }
 
-enum PrayerBadgeType  {
-    case saved
-    case twoOrMore
-    case answered
-    case inGroup
-    case inPrivate
-    case inBody
-    case inFriends
-}
 
-
-struct PrayerBadgeIcon: View {
-    let image: Image
-    
-    
-    var body: some View{
-        return ZStack {
-//            RoundedRectangle(cornerRadius: 4)
-//                .fill(Color.gray)
-//                .frame(width: 25, height: 25, alignment:.center)
-                
-            image
-                .colorMultiply(.yellow)
-
-        }
-    }
-
-}
 
 

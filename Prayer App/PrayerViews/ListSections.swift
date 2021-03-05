@@ -12,7 +12,68 @@ import Amplify
 struct MyPrayersSection: View {
     
     @Binding var prayers: [Prayer]
-    var user: AuthUser
+    var currentUserID: String
+    
+        
+    
+    let listofBadgeLists : [[PrayerBadgeType]] = [
+        [.saved, .twoOrMore],
+        [.answered, .twoOrMore],
+        [.saved, .answered],
+        [.saved, .twoOrMore, .answered],
+        [.answered],
+        [.twoOrMore]
+    ]
+    
+    var body: some View{
+        
+                    
+            Section(header: HStack {
+                Image(systemName: "person.fill")
+                Text("My Prayers")
+            }
+            ) {
+                
+                ForEach(prayers) { prayer in
+                    let number = Int.random(in: 0..<6) //tomdo: replace with actauly badge earnings
+                       
+                        
+                        //WHAT MAKES THIS UNIQUE
+                        if(prayer.userID == currentUserID) {
+                            NavigationLink(destination: IndividualPrayerView(prayer: prayer)){
+                                ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
+                            }
+                        }
+                
+                }.onDelete { indices in
+                    indices.forEach {
+                        // removing from session data will refresh UI
+                        let Prayer = prayers.remove(at: $0)
+
+                        // asynchronously remove from database
+                        //AWS_Backend.shared.deletePrayer(Prayer: Prayer)
+                        Amplify.DataStore.delete(Prayer) {
+                            result in
+                            switch(result) {
+                            case .success:
+                                print("Deleted item: \(Prayer.id)")
+                            case .failure(let error):
+                                print("Could not update data in Datastore: \(error)")
+                            }
+                        }
+
+                    }
+                }
+            }
+    }
+    
+}
+
+
+struct OthersPrayersSection: View {
+    
+    @Binding var prayers: [Prayer]
+    var currentUserID: String
     
     
     let listofBadgeLists : [[PrayerBadgeType]] = [
@@ -25,17 +86,21 @@ struct MyPrayersSection: View {
     ]
     
     var body: some View{
-        Section(header: ListHeader()) {
+        Section(header: HStack {
+            Image(systemName: "person.2.fill")
+            Text("Friends' Prayers")
+        }
+        ) {
             
             ForEach(prayers) { prayer in
                 let number = Int.random(in: 0..<6) //tomdo: replace with actauly badge earnings
                    
                     
                     //WHAT MAKES THIS UNIQUE
-                    if(prayer.userID == user.userId) {
-                        //NavigationLink(destination: IndividualPrayerView(prayer: prayers)){
-                        ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
-                        //}
+                    if(prayer.userID != currentUserID && prayer.prayergroupID != nil) {
+                        NavigationLink(destination: IndividualPrayerView(prayer: prayer)){
+                            ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
+                        }
                     }
 
             }.onDelete { indices in
@@ -62,10 +127,12 @@ struct MyPrayersSection: View {
 }
 
 
-struct OthersPrayersSection: View {
+
+
+struct GroupPrayerSection: View {
     
     @Binding var prayers: [Prayer]
-    var user: AuthUser
+    var groupID: String
     
     
     let listofBadgeLists : [[PrayerBadgeType]] = [
@@ -80,19 +147,19 @@ struct OthersPrayersSection: View {
     var body: some View{
         Section(header: HStack {
             Image(systemName: "person.3.fill")
-            Text("Friends' Prayers")
+            Text("Group: " + groupID)
         }
         ) {
             
             ForEach(prayers) { prayer in
                 let number = Int.random(in: 0..<6) //tomdo: replace with actauly badge earnings
                    
-                    
-                    //WHAT MAKES THIS UNIQUE
-                    if(prayer.userID != user.userId && prayer.prayergroupID != nil) {
-                        //NavigationLink(destination: IndividualPrayerView(prayer: prayers)){
-                        ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
-                        //}
+                    // MARK: -
+                    //          WHAT MAKES THIS UNIQUE
+                    if(prayer.prayergroupID == groupID) {
+                        NavigationLink(destination: IndividualPrayerView(prayer: prayer)){
+                            ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
+                        }
                     }
 
             }.onDelete { indices in
@@ -117,4 +184,3 @@ struct OthersPrayersSection: View {
         }
     }
 }
-

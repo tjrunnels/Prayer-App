@@ -9,14 +9,16 @@ import SwiftUI
 import Amplify
 
 struct AddPrayerView: View {
+    
     @Binding var sessionDataPrayers: [Prayer]
     var user : AuthUser
     @Binding var showAddPrayerView: Bool
 
-    @State var title : String        = "New Prayer"
-    @State var description : String = "This is a new Prayer"
+    @State var title : String           = "New Prayer"
+    @State var description : String     = "This is a new Prayer"
     
     @State var image : UIImage?
+    @State var group : String   = "CF4D76DE-924E-4002-8B3C-2200EAFEA123"
     @State var showCaptureImageView = false
     
 
@@ -27,8 +29,10 @@ struct AddPrayerView: View {
             Section(header: Text("TEXT")) {
                 TextField("Title", text: $title)
                 TextField("Description", text: $description)
-            }
+                TextField("Group", text: $group)
 
+            }
+            
             Section(header: Text("PICTURE")) {
                 VStack {
                     Button(action: {
@@ -59,6 +63,7 @@ struct AddPrayerView: View {
                     var prayer = Prayer(id : UUID().uuidString,
                                     title: self.$title.wrappedValue,
                                     description: self.$description.wrappedValue,
+                                    prayergroupID: self.$group.wrappedValue,
                                     userID: self.user.userId
                                     
                                     
@@ -77,7 +82,7 @@ struct AddPrayerView: View {
                     let item = Prayer(
                         title: self.title,
                         description: self.description,
-                        prayergroupID: "null", //for some reason you have to have prayergroupID included important!
+                        prayergroupID: self.group, //for some reason you have to have prayergroupID included important!
                         userID: user.userId
                         )
                     Amplify.DataStore.save(item) { result in
