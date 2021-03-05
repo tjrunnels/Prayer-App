@@ -17,22 +17,37 @@ struct MainTabView: View {
     
     
     
+    func loadUser (userIDFromAuth: String) {
+        Amplify.DataStore.query(
+                User.self,
+                where: User.keys.id == userIDFromAuth
+            ) { result in
+            do {
+                let thisUser = try result.get()
+                print("prayers datastore query results: ")
+                print(thisUser)
+                if(thisUser.count > 1) {print("WARNING: found multiple Users from id: " + userIDFromAuth )}
+                DispatchQueue.main.async {
+                    sessionData.currentUser = thisUser.first
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
+
+    
+    
  
     
     var body: some View {
         TabView{
-            UserView (user: self.user)
-                .tabItem {
-                    Image(systemName: "person.2.circle")
-                    Text("User")
-                }
-                .environmentObject(authSessionManager)
-            
+
             
             ListPrayersView(user: user)
                 .tabItem {
-                    Image(systemName: "list.dash")
-                    Text("List")
+                    Image(systemName: "mail.stack")
+                    Text("Prayers")
                 }
                 .environmentObject(authSessionManager)
                 .environmentObject(self.sessionData)
@@ -52,9 +67,20 @@ struct MainTabView: View {
 //                }
 //                .environmentObject(sessionManager)
             
+            
+            UserView (user: self.user)
+                .tabItem {
+                    Image(systemName: "person.2.circle")
+                    Text("User")
+                }
+                .environmentObject(authSessionManager)
+                           
            
             
         }
+        .onAppear(perform: {
+            loadUser(userIDFromAuth: user.userId)
+        })
     }
 }
 

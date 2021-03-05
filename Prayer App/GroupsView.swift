@@ -22,9 +22,10 @@ struct GroupsView: View {
     var user: AuthUser
     
     @State var updateNowPlz : Bool = false
-    @State var showAddPrayerView = false
+    @State var showAddGroupView = false
+    @State var myPrayerGroupUsers: [PrayerGroupUser] = []
     
-    @State var groupIDsToShow : [String] = ["CF4D76DE-924E-4002-8B3C-2200EAFEA123"]
+    //@State var groupIDsToShow : [String] = ["CF4D76DE-924E-4002-8B3C-2200EAFEA123"]
     
     
     func loadGroups () {
@@ -33,7 +34,7 @@ struct GroupsView: View {
             ) { result in
             do {
                 let thisGroups = try result.get()
-                print("prayerGroups datastore query results: ")
+                print("PrayerGroup datastore query results: ")
                 print(thisGroups)
                 DispatchQueue.main.async {
                     sessionData.prayerGroups = thisGroups
@@ -53,7 +54,7 @@ struct GroupsView: View {
             ) { result in
             do {
                 let thisPrayers = try result.get()
-                print("prayers datastore query results: ")
+                print("loadPrayerList query results: ")
                 print(thisPrayers)
                 DispatchQueue.main.async {
                     sessionData.prayers = thisPrayers
@@ -64,31 +65,61 @@ struct GroupsView: View {
         }
     }
     
+   
+
+    
+    
+    
+    
     
     
     var body: some View {
         
             NavigationView {
 
+                ZStack {
+                    
                     List {
-                        Section(header: HStack {
-                            Image(systemName: "person.icloud.fill")
-                            Text("All Groups")
-                        }
-                        ) {
-                            ForEach(sessionData.prayerGroups) { group in
-                                VStack {
-                                    Text(group.name ?? "").padding(.top, 15)
-                                    Text(group.id).font(.caption).padding(.bottom, 15)
-                                }
-                            
-                            }
-                        }
+                        MyGroupSection(myUserPrayerGroups: Array(sessionData.currentUser!.prayergroups!))
+                        GroupSection(prayerGroups: sessionData.prayerGroups)
                     }
-                    .listStyle(InsetGroupedListStyle())
+                    .navigationBarTitle(Text("Groups"))
+
+
+
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                self.showAddGroupView.toggle()
+                                print("button pressed")
+                            }, label: {
+                                Text("+")
+                                .font(.system(.largeTitle))
+                                .frame(width: 57, height: 50)
+                                .foregroundColor(Color.black)
+                                .padding(.bottom, 7)
+                            })
+                            .background(Color("Element"))
+                            .cornerRadius(38.5)
+                            .padding()
+                            .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
+                            
+                        }.sheet(isPresented: $showAddGroupView) {
+                            AddGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, user: user, showAddGroupView: $showAddGroupView)
+                        }
+                        
+                    }//add button vstack
+                    
+                    
+                    
+                    
+                }//zstack
             
             }//end of NavigationView
                 .onAppear(perform: loadGroups)
+            
         
     }//end of view
     
@@ -102,7 +133,7 @@ struct GroupSection: View {
     
     var body: some View {
 
-        List {
+
             Section(header: HStack {
                 Image(systemName: "person.icloud.fill")
                 Text("All Groups")
@@ -116,11 +147,37 @@ struct GroupSection: View {
                 
                 }
             }
-        }
+        
         .listStyle(InsetGroupedListStyle())
     }
     
 }
+
+struct MyGroupSection: View {
+    
+    var myUserPrayerGroups: [PrayerGroupUser]
+    
+    var body: some View {
+
+            Section(header: HStack {
+                Image(systemName: "rectangle.stack.person.crop")
+                Text("My Groups")
+            }
+            ) {
+
+                ForEach(myUserPrayerGroups) { groupUser in
+                    VStack {
+                        GroupRow(id: groupUser.prayergroup.id, name: groupUser.prayergroup.name)
+                    }
+                }
+              
+            }
+        
+        .listStyle(InsetGroupedListStyle()) //note:  in putting this here instead of in the List in the parent View, it makes it blue and retractable ?  kinda cool i guess
+    
+    }
+}
+
 
 
 struct GroupsSectionView_Previews: PreviewProvider {

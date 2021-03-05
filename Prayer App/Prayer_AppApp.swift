@@ -20,7 +20,7 @@ struct Prayer_AppApp: App {
         configureAmplify()
         //ackend.shared.signOut()
         //authSessionManager.getCurrentAuthUser()
-        sessionData.currentUser = Amplify.Auth.getCurrentUser()
+        sessionData.currentAuthUser = Amplify.Auth.getCurrentUser()
     }
     
     private func configureAmplify() {
@@ -45,13 +45,13 @@ struct Prayer_AppApp: App {
     var body: some Scene {
         WindowGroup {
   
-            switch (sessionData.currentUser != nil) {
+            switch (sessionData.currentAuthUser != nil) {
                 case true:
-                    MainTabView(user: sessionData.currentUser!)
+                    MainTabView(user: sessionData.currentAuthUser!)
                         .environmentObject(authSessionManager)
                 default:
                     LoginView { user in
-                        sessionData.currentUser = user
+                        sessionData.currentAuthUser = user
                     }
                     
             }

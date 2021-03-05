@@ -65,6 +65,8 @@ struct MyPrayersSection: View {
                     }
                 }
             }
+            //.listStyle(InsetGroupedListStyle())  //buggy but cool blue list title??
+
     }
     
 }
@@ -123,6 +125,8 @@ struct OthersPrayersSection: View {
                 }
             }
         }
+        //.listStyle(InsetGroupedListStyle())  //buggy but cool blue list title??
+
     }
 }
 

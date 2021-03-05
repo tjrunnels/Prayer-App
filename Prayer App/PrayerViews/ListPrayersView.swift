@@ -74,15 +74,17 @@ struct ListPrayersView: View {
                 //user's prayers
                 NavigationView {
                     ZStack{
-                    List {
-                        MyPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
-                        OthersPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
-                        ForEach(groupIDsToShow, id: \.self) { groupid in
-                            GroupPrayerSection(prayers: $sessionData.prayers, groupID: groupid)
+                        List {
+                            MyPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
+                            OthersPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
+                            ForEach(groupIDsToShow, id: \.self) { groupid in
+                                GroupPrayerSection(prayers: $sessionData.prayers, groupID: groupid)
+                            }
                         }
-                    }
-                    .listStyle(InsetGroupedListStyle())
-                    .navigationBarTitle(Text("Feed: " + user.userId))
+                        .listStyle(InsetGroupedListStyle())  //take this out for blue buggy section titles
+                        .navigationBarTitle(Text("Feed: " + user.userId))
+                        
+                        
                         VStack {
                             Spacer()
                             HStack {
@@ -106,7 +108,9 @@ struct ListPrayersView: View {
                                 AddPrayerView(sessionDataPrayers: $sessionData.prayers, user: user, showAddPrayerView: $showAddPrayerView)
                             }
                             
-                        }
+                        }//add button vstack
+                        
+                        
                 }//zstack
             
             }//end of NavigationView

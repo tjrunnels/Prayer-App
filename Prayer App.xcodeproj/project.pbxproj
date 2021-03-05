@@ -17,6 +17,7 @@
 		1B59B27A2572D6EE00E290F6 /* AddPrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B59B2792572D6EE00E290F6 /* AddPrayerView.swift */; };
 		1B59B27F2572DA3F00E290F6 /* ListPrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B59B27E2572DA3F00E290F6 /* ListPrayersView.swift */; };
 		1B5B38C425F2B4C7009401EC /* BadgeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B38C325F2B4C6009401EC /* BadgeViews.swift */; };
+		1B5B38C625F2B8AE009401EC /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B38C525F2B8AE009401EC /* AddGroupView.swift */; };
 		1B74612525DDB7EB00015B62 /* profileDemoData.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B74612425DDB7EB00015B62 /* profileDemoData.json */; };
 		1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */; };
 		1B8DDB132565800000ADCB93 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB122565800000ADCB93 /* LoginView.swift */; };
@@ -80,6 +81,7 @@
 		1B59B2792572D6EE00E290F6 /* AddPrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPrayerView.swift; sourceTree = "<group>"; };
 		1B59B27E2572DA3F00E290F6 /* ListPrayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersView.swift; sourceTree = "<group>"; };
 		1B5B38C325F2B4C6009401EC /* BadgeViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViews.swift; sourceTree = "<group>"; };
+		1B5B38C525F2B8AE009401EC /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		1B74612425DDB7EB00015B62 /* profileDemoData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = profileDemoData.json; sourceTree = "<group>"; };
 		1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionManager.swift; sourceTree = "<group>"; };
 		1B8DDB122565800000ADCB93 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				1BE46086255EE3CD00576087 /* Prayer_AppApp.swift */,
 				1BCC876025718E05008AEB72 /* MainTabView.swift */,
 				1B41092525F1917B0080F908 /* GroupsView.swift */,
+				1B5B38C525F2B8AE009401EC /* AddGroupView.swift */,
 				1B1820B32562BFB000AC42EE /* CaptureImageView.swift */,
 				1B1208312572FE52004C185D /* AccountView.swift */,
 				1B09934B25DDBE3C00F26512 /* UserView.swift */,
@@ -558,6 +561,7 @@
 				1B9086A525ED56B60022B504 /* PrayerGroupUser.swift in Sources */,
 				1BE521E52566BC4C001A365F /* SessionView.swift in Sources */,
 				1B8DDB182565800E00ADCB93 /* SignUpView.swift in Sources */,
+				1B5B38C625F2B8AE009401EC /* AddGroupView.swift in Sources */,
 				1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */,
 				1B9086B025ED79540022B504 /* ListSections.swift in Sources */,
 				1B09934725DDBBF600F26512 /* DataHandler.swift in Sources */,
