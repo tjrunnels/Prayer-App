@@ -136,7 +136,7 @@ struct OthersPrayersSection: View {
 
 struct GroupPrayerSection: View {
     
-    @Binding var prayers: [Prayer]
+     var prayers: [Prayer]
     var groupID: String
     
     
@@ -167,25 +167,26 @@ struct GroupPrayerSection: View {
                         }
                     }
 
-            }.onDelete { indices in
-                indices.forEach {
-                    // removing from session data will refresh UI
-                    let Prayer = prayers.remove(at: $0)
-
-                    // asynchronously remove from database
-                    //AWS_Backend.shared.deletePrayer(Prayer: Prayer)
-                    Amplify.DataStore.delete(Prayer) {
-                        result in
-                        switch(result) {
-                        case .success:
-                            print("Deleted item: \(Prayer.id)")
-                        case .failure(let error):
-                            print("Could not update data in Datastore: \(error)")
-                        }
-                    }
-                   
-                }
             }
+//            .onDelete { indices in
+//                indices.forEach {
+//                    // removing from session data will refresh UI
+//                    let Prayer = prayers.remove(at: $0)
+//
+//                    // asynchronously remove from database
+//                    //AWS_Backend.shared.deletePrayer(Prayer: Prayer)
+//                    Amplify.DataStore.delete(Prayer) {
+//                        result in
+//                        switch(result) {
+//                        case .success:
+//                            print("Deleted item: \(Prayer.id)")
+//                        case .failure(let error):
+//                            print("Could not update data in Datastore: \(error)")
+//                        }
+//                    }
+//                   
+//                }
+//            }
         }
     }
 }

@@ -78,11 +78,11 @@ struct ListPrayersView: View {
                             MyPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
                             OthersPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
                             ForEach(groupIDsToShow, id: \.self) { groupid in
-                                GroupPrayerSection(prayers: $sessionData.prayers, groupID: groupid)
+                                GroupPrayerSection(prayers: Array(Set(sessionData.prayers)), groupID: groupid)   //using Array(Set([a,b,c])) returns only the unique elements of the array.  Good here becuase the list doesn't need to be binding... or does it..?
                             }
                         }
                         .listStyle(InsetGroupedListStyle())  //take this out for blue buggy section titles
-                        .navigationBarTitle(Text("Feed: " + user.userId))
+                        .navigationBarTitle(Text("Feed"))
                         
                         
                         VStack {

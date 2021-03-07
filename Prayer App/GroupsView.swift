@@ -108,6 +108,9 @@ struct GroupsView: View {
                             .cornerRadius(38.5)
                             .padding([.top,.bottom, .trailing])
                             .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
+                            .sheet(isPresented: $showJoinGroupView) {
+                                JoinGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, sessionDataUser: sessionData.currentUser!, showJoinGroupView: $showJoinGroupView, myPrayerGroupUsers: $myPrayerGroupUsers)
+                            }
                             
                             
                             //add button
@@ -125,11 +128,10 @@ struct GroupsView: View {
                             .cornerRadius(38.5)
                             .padding([.top,.bottom, .trailing])
                             .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
+                            .sheet(isPresented: $showAddGroupView) {
+                                AddGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, user: user, showAddGroupView: $showAddGroupView)
+                            }
                             
-                        }.sheet(isPresented: $showAddGroupView) {
-                            AddGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, user: user, showAddGroupView: $showAddGroupView)
-                        }.sheet(isPresented: $showJoinGroupView) {
-                            JoinGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, sessionDataUser: sessionData.currentUser!, showJoinGroupView: $showJoinGroupView, myPrayerGroupUsers: $myPrayerGroupUsers)
                         }
                         
                     }//add button vstack
