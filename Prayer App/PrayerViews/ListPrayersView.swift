@@ -60,7 +60,7 @@ struct ListPrayersView: View {
                 print("prayers datastore query results: ")
                 print(thisPrayers)
                 DispatchQueue.main.async {
-                    sessionData.prayers = thisPrayers
+                    sessionData.prayers += thisPrayers  //tomdo: this results in duplicates
                 }
             } catch {
                 print(error)
@@ -115,6 +115,10 @@ struct ListPrayersView: View {
             
             }//end of NavigationView
                 .onAppear(perform: loadMyPrayerList)
+                .onAppear(perform: {
+                    loadPrayerListByGroup(groupID: "CF4D76DE-924E-4002-8B3C-2200EAFEA123")
+                })
+
     }//end of view
     
     

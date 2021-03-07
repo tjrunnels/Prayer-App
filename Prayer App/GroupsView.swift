@@ -23,6 +23,7 @@ struct GroupsView: View {
     
     @State var updateNowPlz : Bool = false
     @State var showAddGroupView = false
+    @State var showJoinGroupView = false
     @State var myPrayerGroupUsers: [PrayerGroupUser] = []
     
     //@State var groupIDsToShow : [String] = ["CF4D76DE-924E-4002-8B3C-2200EAFEA123"]
@@ -84,6 +85,7 @@ struct GroupsView: View {
                         GroupSection(prayerGroups: sessionData.prayerGroups)
                     }
                     .navigationBarTitle(Text("Groups"))
+                    .listStyle(InsetGroupedListStyle())
 
 
 
@@ -91,9 +93,27 @@ struct GroupsView: View {
                         Spacer()
                         HStack {
                             Spacer()
+                            
+                            //join button
+                            Button(action: {
+                                self.showJoinGroupView.toggle()
+                                print("showJoin button pressed")
+                            }, label: {
+                                Image(systemName: "rectangle.stack.badge.plus")
+                                .frame(width: 57, height: 50)
+                                .foregroundColor(Color.black)
+                                .padding(.bottom, 7)
+                            })
+                            .background(Color("Element"))
+                            .cornerRadius(38.5)
+                            .padding([.top,.bottom, .trailing])
+                            .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
+                            
+                            
+                            //add button
                             Button(action: {
                                 self.showAddGroupView.toggle()
-                                print("button pressed")
+                                print("showAdd button pressed")
                             }, label: {
                                 Text("+")
                                 .font(.system(.largeTitle))
@@ -103,14 +123,18 @@ struct GroupsView: View {
                             })
                             .background(Color("Element"))
                             .cornerRadius(38.5)
-                            .padding()
+                            .padding([.top,.bottom, .trailing])
                             .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                             
                         }.sheet(isPresented: $showAddGroupView) {
                             AddGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, user: user, showAddGroupView: $showAddGroupView)
+                        }.sheet(isPresented: $showJoinGroupView) {
+                            JoinGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, sessionDataUser: sessionData.currentUser!, showJoinGroupView: $showJoinGroupView, myPrayerGroupUsers: $myPrayerGroupUsers)
                         }
                         
                     }//add button vstack
+                    
+                    
                     
                     
                     
@@ -142,13 +166,15 @@ struct GroupSection: View {
                 
                 ForEach(prayerGroups) { group in
                     VStack {
-                        GroupRow(id: group.id, name: group.name)
+                        NavigationLink(destination: IndividualGroupView(thisGroups_Users: Array(group.PrayerGroupUsers!))){
+                            GroupRow(id: group.id, name: group.name)
+                        }
                     }
                 
                 }
             }
         
-        .listStyle(InsetGroupedListStyle())
+        //.listStyle(InsetGroupedListStyle())  //buggy but cool blue list title??
     }
     
 }
@@ -173,8 +199,23 @@ struct MyGroupSection: View {
               
             }
         
-        .listStyle(InsetGroupedListStyle()) //note:  in putting this here instead of in the List in the parent View, it makes it blue and retractable ?  kinda cool i guess
+            //.listStyle(InsetGroupedListStyle())  //buggy but cool blue list title??
+
+        //.listStyle(InsetGroupedListStyle()) //note:  in putting this here instead of in the List in the parent View, it makes it blue and retractable ?  kinda cool i guess
     
+    }
+}
+
+
+struct IndividualGroupView: View {
+    var thisGroups_Users : [PrayerGroupUser]
+    
+    var body: some View {
+        List{
+            ForEach(thisGroups_Users) { groupUser in
+                Text(groupUser.user.username ?? groupUser.user.id)
+            }
+        }.listStyle(InsetGroupedListStyle())
     }
 }
 

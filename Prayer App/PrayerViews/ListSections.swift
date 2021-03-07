@@ -43,6 +43,7 @@ struct MyPrayersSection: View {
                             NavigationLink(destination: IndividualPrayerView(prayer: prayer)){
                                 ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
                             }
+                            
                         }
                 
                 }.onDelete { indices in

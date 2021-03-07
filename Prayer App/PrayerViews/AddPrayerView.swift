@@ -33,29 +33,29 @@ struct AddPrayerView: View {
 
             }
             
-            Section(header: Text("PICTURE")) {
-                VStack {
-                    Button(action: {
-                        self.showCaptureImageView.toggle()
-                    }) {
-                        Text("Choose photo")
-                    }.sheet(isPresented: $showCaptureImageView) {
-                        CaptureImageView(isShown: self.$showCaptureImageView, image: self.$image)
-                    }
-                    if (image != nil ) {
-                        HStack {
-                            Spacer()
-                            Image(uiImage: image!)
-                                .resizable()
-                                .frame(width: 250, height: 200)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                .shadow(radius: 10)
-                            Spacer()
-                        }
-                    }
-                }
-            }
+//            Section(header: Text("PICTURE")) {
+//                VStack {
+//                    Button(action: {
+//                        self.showCaptureImageView.toggle()
+//                    }) {
+//                        Text("Choose photo")
+//                    }.sheet(isPresented: $showCaptureImageView) {
+//                        CaptureImageView(isShown: self.$showCaptureImageView, image: self.$image)
+//                    }
+//                    if (image != nil ) {
+//                        HStack {
+//                            Spacer()
+//                            Image(uiImage: image!)
+//                                .resizable()
+//                                .frame(width: 250, height: 200)
+//                                .clipShape(Circle())
+//                                .overlay(Circle().stroke(Color.white, lineWidth: 4))
+//                                .shadow(radius: 10)
+//                            Spacer()
+//                        }
+//                    }
+//                }
+//            }
 
             Section {
                 Button(action: {
@@ -71,18 +71,18 @@ struct AddPrayerView: View {
                     print("Save Prayer pressed as: \(self.user.username)")
                     
                     
-                    //tomdo: this doesn't make sense but whatever
-                    if let i = self.image  {
-                        prayer.image = UUID().uuidString
-                        //prayer.image = Image(uiImage: i)
-                    }
-                    
+//                    //tomdo: this doesn't make sense but whatever
+//                    if let i = self.image  {
+//                        prayer.image = UUID().uuidString
+//                        //prayer.image = Image(uiImage: i)
+//                    }
+//
                     
                     //datastoredo: doesn't seem like its syncing my prayers up with AWS perfectly... is it because i'm telling them the userid?  Should i instead tell them the User.id that i grabbed?  isn't it the same?
                     let item = Prayer(
                         title: self.title,
                         description: self.description,
-                        prayergroupID: self.group, //for some reason you have to have prayergroupID included important!
+                        prayergroupID: self.group, //for some reason you have to have prayergroupID included !-important-!
                         userID: user.userId
                         )
                     Amplify.DataStore.save(item) { result in
@@ -106,5 +106,16 @@ struct AddPrayerView: View {
 
 
         }
+    }
+    
+    ///returns a boolen if the string is valid
+    func verifyGroup(groupid: String) -> Bool {
+        if(groupid != nil && groupid != "" && groupid != " ") {
+            return true
+        }
+        else {
+            return false
+        }
+
     }
 }

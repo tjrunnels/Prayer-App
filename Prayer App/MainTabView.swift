@@ -77,12 +77,24 @@ struct MainTabView: View {
                            
            
             
-        }
+        }//tabview
         .onAppear(perform: {
             loadUser(userIDFromAuth: user.userId)
         })
-    }
-}
+        
+        // this blocks the taps from registering normally for some reason
+//        .onTapGesture {
+//            let impactHeavy = UIImpactFeedbackGenerator(style: .medium)
+//                    impactHeavy.impactOccurred()
+//        }
+        
+   
+    
+    
+    } //body
+
+} //struct
+
 
 
 
