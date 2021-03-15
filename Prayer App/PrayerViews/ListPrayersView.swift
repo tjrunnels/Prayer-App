@@ -17,8 +17,14 @@ struct ListPrayersView: View {
     @State var updateNowPlz : Bool = false
     @State var showAddPrayerView = false
     
-    @State var groupIDsToShow : [String] = ["CF4D76DE-924E-4002-8B3C-2200EAFEA123"]
+    @State var pGroupsToShow : [PrayerGroup] = []
     
+    
+    init(authuser: AuthUser) {
+        self.user = authuser
+        
+        
+    }
     
     
     let listofBadgeLists : [[PrayerBadgeType]] = [
@@ -57,7 +63,7 @@ struct ListPrayersView: View {
             ) { result in
             do {
                 let thisPrayers = try result.get()
-                print("prayers datastore query results: ")
+                print("prayers by group \(groupID) datastore query results: ")
                 print(thisPrayers)
                 DispatchQueue.main.async {
                     sessionData.prayers += thisPrayers  //tomdo: this results in duplicates
@@ -77,13 +83,21 @@ struct ListPrayersView: View {
                         List {
                             MyPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
                             OthersPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
-                            ForEach(groupIDsToShow, id: \.self) { groupid in
-                                GroupPrayerSection(prayers: Array(Set(sessionData.prayers)), groupID: groupid)   //using Array(Set([a,b,c])) returns only the unique elements of the array.  Good here becuase the list doesn't need to be binding... or does it..?
+                            ForEach(Array(sessionData.currentUser?.prayergroups ?? []), id: \.self) { pGroupU in
+                                GroupPrayerSection(prayers: Array(Set(sessionData.prayers)), pGroup: pGroupU.prayergroup)   //using Array(Set([a,b,c])) returns only the unique elements of the array.  Good here becuase the list doesn't need to be binding... or does it..?
                             }
+                            //tomdo:  I can't figure out how to load the group prayers AFTER the currentUser is ready for it's groups to be read
+//                            .onChange(of: $sessionData.currentUser.prayergroups, perform: { value in
+//                                for pGroupU in value {
+//                                    print("onchange value: \(value).  loading...")
+//                                    loadPrayerListByGroup(groupID: pGroupU.prayergroup.id)
+//                                }
+//
+//                            })
+                            
                         }
                         .listStyle(InsetGroupedListStyle())  //take this out for blue buggy section titles
                         .navigationBarTitle(Text("Feed"))
-                        
                         
                         VStack {
                             Spacer()
@@ -114,9 +128,22 @@ struct ListPrayersView: View {
                 }//zstack
             
             }//end of NavigationView
-                .onAppear(perform: loadMyPrayerList)
                 .onAppear(perform: {
-                    loadPrayerListByGroup(groupID: "CF4D76DE-924E-4002-8B3C-2200EAFEA123")
+                    // (1) load prayers that are mine
+                        loadMyPrayerList();
+                    
+//                    // (2) figure out which groups to load
+//                        //  populate groupIDsToShow with the groups this user is in
+//                        pGroupsToShow = []
+//                        for pGroup in sessionData.currentUser?.prayergroups! ?? [] {
+//                            pGroupsToShow.append(pGroup.prayergroup)
+//                        }
+//
+//                    // (3) load each of those groups
+//                    for pGroup in pGroupsToShow {
+//                        loadPrayerListByGroup(groupID: pGroup.id)
+//                    }
+                        
                 })
 
     }//end of view

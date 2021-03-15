@@ -81,8 +81,8 @@ struct GroupsView: View {
                 ZStack {
                     
                     List {
-                        MyGroupSection(myUserPrayerGroups: Array(sessionData.currentUser!.prayergroups!))
-                        GroupSection(prayerGroups: sessionData.prayerGroups)
+                        MyGroupSection(thisUsers_PrayerGroupUsers: Array(sessionData.currentUser!.prayergroups!), allPrayers: sessionData.prayers)
+                        GroupSection(prayerGroups: sessionData.prayerGroups, allPrayers: sessionData.prayers)
                     }
                     .navigationBarTitle(Text("Groups"))
                     .listStyle(InsetGroupedListStyle())
@@ -156,6 +156,7 @@ struct GroupsView: View {
 struct GroupSection: View {
     
     var prayerGroups: [PrayerGroup]
+    var allPrayers: [Prayer]
     
     var body: some View {
 
@@ -168,7 +169,8 @@ struct GroupSection: View {
                 
                 ForEach(prayerGroups) { group in
                     VStack {
-                        NavigationLink(destination: IndividualGroupView(thisGroups_Users: Array(group.PrayerGroupUsers!))){
+                        NavigationLink(destination: IndividualGroupView(thisGroups_Users: Array(group.PrayerGroupUsers!), thisGroup_Prayers: allPrayers.filter { $0.prayergroupID == group.id }))
+                        {
                             GroupRow(id: group.id, name: group.name)
                         }
                     }
@@ -183,20 +185,33 @@ struct GroupSection: View {
 
 struct MyGroupSection: View {
     
-    var myUserPrayerGroups: [PrayerGroupUser]
+    var prayerGroups: [PrayerGroup]
+    var allPrayers: [Prayer]
+    
+    init(thisUsers_PrayerGroupUsers: [PrayerGroupUser], allPrayers: [Prayer]) {
+        prayerGroups = thisUsers_PrayerGroupUsers.map {$0.prayergroup}  //array.map can be very useful in this whole groupuser/group situation.  basically map {$0.prayergroup} says "this array, but i just want the prayergroups variables from the entries
+        self.allPrayers = allPrayers
+    }
     
     var body: some View {
 
             Section(header: HStack {
                 Image(systemName: "rectangle.stack.person.crop")
                 Text("My Groups")
+                Button(action: {print("he pressed it!")}, label: {
+                    Text("see all")
+                })
             }
             ) {
 
-                ForEach(myUserPrayerGroups) { groupUser in
+                ForEach(prayerGroups) { group in
                     VStack {
-                        GroupRow(id: groupUser.prayergroup.id, name: groupUser.prayergroup.name)
+                        NavigationLink(destination: IndividualGroupView(thisGroups_Users: Array(group.PrayerGroupUsers!), thisGroup_Prayers: allPrayers.filter { $0.prayergroupID == group.id }))
+                        {
+                            GroupRow(id: group.id, name: group.name)
+                        }
                     }
+                
                 }
               
             }
@@ -211,15 +226,35 @@ struct MyGroupSection: View {
 
 struct IndividualGroupView: View {
     var thisGroups_Users : [PrayerGroupUser]
+    var thisGroup_Prayers: [Prayer]
     
     var body: some View {
-        List{
-            ForEach(thisGroups_Users) { groupUser in
-                Text(groupUser.user.username ?? groupUser.user.id)
+        List {
+            Section(header: HStack {
+                Image(systemName: "person.fill")
+                Text("Group Members")
+            }
+            ) {
+                ForEach(thisGroups_Users) { groupUser in
+                    Text(groupUser.user.username ?? groupUser.user.id)
+                }
+            }
+            Section(header: HStack {
+                Image(systemName: "mail")
+                Text("Prayers")
+            }
+            ) {
+                ForEach(thisGroup_Prayers) { prayer in
+                    NavigationLink(destination: IndividualPrayerView(prayer: prayer)) {
+                        ListRow(prayer: prayer, myBadges: [.answered,.inPrivate])
+                    }
+                }
             }
         }.listStyle(InsetGroupedListStyle())
+
     }
 }
+
 
 
 
@@ -232,7 +267,13 @@ struct GroupsSectionView_Previews: PreviewProvider {
                 PrayerGroup(id: "5186SASD-RR44-EFFE-7841-897641213684", name: "Rohan"),
                 PrayerGroup(id: "HREEWCEE-EW48-66RS-156R-5431WEW12165", name: "The Shire"),
                 PrayerGroup(id: "486ESFEW-WEF8-48AZ-X48Z-VBRGHWS48689", name: "Prancing Pony")
+            ], allPrayers: [
+                Prayer(title: "title1", userID: "ID_title_1"),
+                Prayer(title: "title2", userID: "ID_title_2"),
+                Prayer(title: "title3", userID: "ID_title_3")
+
             ]
+                    
         )
         .previewLayout(.fixed(width: 390, height: 500))
     }

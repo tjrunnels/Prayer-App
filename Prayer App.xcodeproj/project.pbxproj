@@ -18,6 +18,7 @@
 		1B59B27F2572DA3F00E290F6 /* ListPrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B59B27E2572DA3F00E290F6 /* ListPrayersView.swift */; };
 		1B5B38C425F2B4C7009401EC /* BadgeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B38C325F2B4C6009401EC /* BadgeViews.swift */; };
 		1B5B38C625F2B8AE009401EC /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B38C525F2B8AE009401EC /* AddGroupView.swift */; };
+		1B63104225FFC05000830901 /* AWSModels_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B63104125FFC05000830901 /* AWSModels_Extensions.swift */; };
 		1B74612525DDB7EB00015B62 /* profileDemoData.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B74612425DDB7EB00015B62 /* profileDemoData.json */; };
 		1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */; };
 		1B8DDB132565800000ADCB93 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB122565800000ADCB93 /* LoginView.swift */; };
@@ -82,6 +83,7 @@
 		1B59B27E2572DA3F00E290F6 /* ListPrayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersView.swift; sourceTree = "<group>"; };
 		1B5B38C325F2B4C6009401EC /* BadgeViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViews.swift; sourceTree = "<group>"; };
 		1B5B38C525F2B8AE009401EC /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
+		1B63104125FFC05000830901 /* AWSModels_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSModels_Extensions.swift; sourceTree = "<group>"; };
 		1B74612425DDB7EB00015B62 /* profileDemoData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = profileDemoData.json; sourceTree = "<group>"; };
 		1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionManager.swift; sourceTree = "<group>"; };
 		1B8DDB122565800000ADCB93 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			children = (
 				1B5B38C225F2B459009401EC /* PrayerViews */,
 				1B90869825ED56B50022B504 /* models */,
+				1B63104125FFC05000830901 /* AWSModels_Extensions.swift */,
 				1B59B2742572D6B900E290F6 /* SessionData.swift */,
 				1B2766DC2572F79E0031C94C /* Objects */,
 				1BCC8765257191EB008AEB72 /* AuthenticationViews */,
@@ -562,6 +565,7 @@
 				1BE521E52566BC4C001A365F /* SessionView.swift in Sources */,
 				1B8DDB182565800E00ADCB93 /* SignUpView.swift in Sources */,
 				1B5B38C625F2B8AE009401EC /* AddGroupView.swift in Sources */,
+				1B63104225FFC05000830901 /* AWSModels_Extensions.swift in Sources */,
 				1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */,
 				1B9086B025ED79540022B504 /* ListSections.swift in Sources */,
 				1B09934725DDBBF600F26512 /* DataHandler.swift in Sources */,

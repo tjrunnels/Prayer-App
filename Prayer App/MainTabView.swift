@@ -44,7 +44,7 @@ struct MainTabView: View {
         TabView{
 
             
-            ListPrayersView(user: user)
+            ListPrayersView(authuser: user)
                 .tabItem {
                     Image(systemName: "mail.stack")
                     Text("Prayers")

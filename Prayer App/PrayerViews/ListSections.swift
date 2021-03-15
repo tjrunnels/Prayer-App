@@ -136,8 +136,8 @@ struct OthersPrayersSection: View {
 
 struct GroupPrayerSection: View {
     
-     var prayers: [Prayer]
-    var groupID: String
+    var prayers: [Prayer]
+    var pGroup: PrayerGroup
     
     
     let listofBadgeLists : [[PrayerBadgeType]] = [
@@ -152,7 +152,7 @@ struct GroupPrayerSection: View {
     var body: some View{
         Section(header: HStack {
             Image(systemName: "person.3.fill")
-            Text("Group: " + groupID)
+            Text("Group: " + (pGroup.name ?? pGroup.id))
         }
         ) {
             
@@ -161,7 +161,7 @@ struct GroupPrayerSection: View {
                    
                     // MARK: -
                     //          WHAT MAKES THIS UNIQUE
-                    if(prayer.prayergroupID == groupID) {
+                if(prayer.prayergroupID == pGroup.id) {
                         NavigationLink(destination: IndividualPrayerView(prayer: prayer)){
                             ListRow(prayer: prayer, myBadges: listofBadgeLists[number])
                         }

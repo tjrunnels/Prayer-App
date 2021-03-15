@@ -18,7 +18,7 @@ struct AddPrayerView: View {
     @State var description : String     = "This is a new Prayer"
     
     @State var image : UIImage?
-    @State var group : String   = "CF4D76DE-924E-4002-8B3C-2200EAFEA123"
+    @State var group : String   = "e9c08a04-dd54-4c47-bf26-0218d884370c"
     @State var showCaptureImageView = false
     
 

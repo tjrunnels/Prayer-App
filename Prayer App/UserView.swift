@@ -97,7 +97,7 @@ struct UserView: View {
                    }
             } receiveValue: { queryUsers in
                 for queryUser in queryUsers {
-                    print("AYO: " + queryUser.id + " vs " + user.userId)
+                    print("AYO: " + queryUser.id + " vs " + user.userId)  //tomdo: change this query to just get the one we need
                     if(queryUser.id != nil && queryUser.id == self.user.userId) {
                         currentUserInfo = queryUser
                         print("GOT USER: " + queryUser.id)
