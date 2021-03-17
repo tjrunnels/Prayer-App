@@ -57,25 +57,6 @@ struct Prayer_AppApp: App {
             }
             
             
-//            switch authSessionManager.authState {
-//            case .login:
-//                LoginView()
-//                    .environmentObject(authSessionManager)
-//            case .signUp:
-//                SignUpView()
-//                    .environmentObject(authSessionManager)
-//            case .confirmCode(let username):
-//                ConfirmationView(username: username)
-//                    .environmentObject(authSessionManager)
-//            case .session(let user):
-//                MainTabView(user: user)
-//                    .environmentObject(authSessionManager)
-//            }
-            
-            
-            
-            
-            
         }
     }
 }

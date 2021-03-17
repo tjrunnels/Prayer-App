@@ -56,6 +56,16 @@ extension User: Hashable, Identifiable {
         hasher.combine(id)
     }
 
+    public func pGroupsJoined() -> [PrayerGroup] {
+        if(self.prayergroups == nil) {
+            return []
+        }
+        else {
+            var tmp = self.prayergroups!.toArray(ofType: PrayerGroupUser.self).map {$0.prayergroup}
+            return tmp
+        }
+
+    }
 }
 
 
@@ -74,3 +84,10 @@ extension List {
             return array
         }
 }
+
+
+
+
+//TODO: add AWSUserID field to User so that AuthUser and my User don't have to have the same ID
+
+//TODO: add 'privacy level' or something like that field to Prayer 

@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "B2F0B939-F872-441B-884A-33FB08F71ADE",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Prayer App.xcodeproj",
+      "identifier" : "1BE46082255EE3CD00576087",
+      "name" : "Prayer App"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Prayer App.xcodeproj",
+        "identifier" : "1BE46093255EE3CF00576087",
+        "name" : "Prayer AppTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Prayer App.xcodeproj",
+        "identifier" : "1BE4609E255EE3CF00576087",
+        "name" : "Prayer AppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

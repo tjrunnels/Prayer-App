@@ -23,7 +23,6 @@ struct ListPrayersView: View {
     init(authuser: AuthUser) {
         self.user = authuser
         
-        
     }
     
     
@@ -66,7 +65,7 @@ struct ListPrayersView: View {
                 print("prayers by group \(groupID) datastore query results: ")
                 print(thisPrayers)
                 DispatchQueue.main.async {
-                    sessionData.prayers += thisPrayers  //tomdo: this results in duplicates
+                    sessionData.prayers =  Array(Set(sessionData.prayers + thisPrayers))
                 }
             } catch {
                 print(error)
@@ -84,16 +83,8 @@ struct ListPrayersView: View {
                             MyPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
                             OthersPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
                             ForEach(Array(sessionData.currentUser?.prayergroups ?? []), id: \.self) { pGroupU in
-                                GroupPrayerSection(prayers: Array(Set(sessionData.prayers)), pGroup: pGroupU.prayergroup)   //using Array(Set([a,b,c])) returns only the unique elements of the array.  Good here becuase the list doesn't need to be binding... or does it..?
+                                GroupPrayerSection(prayers: $sessionData.prayers, pGroup: pGroupU.prayergroup)   //using Array(Set([a,b,c])) returns only the unique elements of the array.  Good here becuase the list doesn't need to be binding... or does it..?
                             }
-                            //tomdo:  I can't figure out how to load the group prayers AFTER the currentUser is ready for it's groups to be read
-//                            .onChange(of: $sessionData.currentUser.prayergroups, perform: { value in
-//                                for pGroupU in value {
-//                                    print("onchange value: \(value).  loading...")
-//                                    loadPrayerListByGroup(groupID: pGroupU.prayergroup.id)
-//                                }
-//
-//                            })
                             
                         }
                         .listStyle(InsetGroupedListStyle())  //take this out for blue buggy section titles
@@ -119,7 +110,7 @@ struct ListPrayersView: View {
                                 .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                                 
                             }.sheet(isPresented: $showAddPrayerView) {
-                                AddPrayerView(sessionDataPrayers: $sessionData.prayers, user: user, showAddPrayerView: $showAddPrayerView)
+                                AddPrayerView(sessionDataPrayers: $sessionData.prayers, user: sessionData.currentUser!, showAddPrayerView: $showAddPrayerView)
                             }
                             
                         }//add button vstack
@@ -133,16 +124,18 @@ struct ListPrayersView: View {
                         loadMyPrayerList();
                     
 //                    // (2) figure out which groups to load
-//                        //  populate groupIDsToShow with the groups this user is in
-//                        pGroupsToShow = []
+                        //  populate groupIDsToShow with the groups this user is in
+                        pGroupsToShow = sessionData.currentUser?.prayergroups!.map {$0.prayergroup} ?? []
+                        print("yeah..this is running")
+                        print(pGroupsToShow.count)
 //                        for pGroup in sessionData.currentUser?.prayergroups! ?? [] {
 //                            pGroupsToShow.append(pGroup.prayergroup)
 //                        }
 //
 //                    // (3) load each of those groups
-//                    for pGroup in pGroupsToShow {
-//                        loadPrayerListByGroup(groupID: pGroup.id)
-//                    }
+                        for pGroup in pGroupsToShow {
+                            loadPrayerListByGroup(groupID: pGroup.id)
+                        }
                         
                 })
 

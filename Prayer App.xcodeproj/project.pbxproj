@@ -20,6 +20,7 @@
 		1B5B38C625F2B8AE009401EC /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B38C525F2B8AE009401EC /* AddGroupView.swift */; };
 		1B63104225FFC05000830901 /* AWSModels_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B63104125FFC05000830901 /* AWSModels_Extensions.swift */; };
 		1B74612525DDB7EB00015B62 /* profileDemoData.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B74612425DDB7EB00015B62 /* profileDemoData.json */; };
+		1B7A12C6260142B10048629C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A12C5260142B10048629C /* CustomTextField.swift */; };
 		1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */; };
 		1B8DDB132565800000ADCB93 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB122565800000ADCB93 /* LoginView.swift */; };
 		1B8DDB182565800E00ADCB93 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB172565800E00ADCB93 /* SignUpView.swift */; };
@@ -85,6 +86,8 @@
 		1B5B38C525F2B8AE009401EC /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		1B63104125FFC05000830901 /* AWSModels_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSModels_Extensions.swift; sourceTree = "<group>"; };
 		1B74612425DDB7EB00015B62 /* profileDemoData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = profileDemoData.json; sourceTree = "<group>"; };
+		1B7A12C5260142B10048629C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		1B7A12C7260260130048629C /* Prayer App.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Prayer App.xctestplan"; sourceTree = "<group>"; };
 		1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionManager.swift; sourceTree = "<group>"; };
 		1B8DDB122565800000ADCB93 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1B8DDB172565800E00ADCB93 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -207,6 +210,7 @@
 		1BE4607A255EE3CD00576087 = {
 			isa = PBXGroup;
 			children = (
+				1B7A12C7260260130048629C /* Prayer App.xctestplan */,
 				1B09934625DDBBF600F26512 /* DataHandler.swift */,
 				1B74612425DDB7EB00015B62 /* profileDemoData.json */,
 				1BD35614257557C800F75451 /* README.txt */,
@@ -248,6 +252,7 @@
 				1B1820B32562BFB000AC42EE /* CaptureImageView.swift */,
 				1B1208312572FE52004C185D /* AccountView.swift */,
 				1B09934B25DDBE3C00F26512 /* UserView.swift */,
+				1B7A12C5260142B10048629C /* CustomTextField.swift */,
 				1BE4608A255EE3CF00576087 /* Assets.xcassets */,
 				1BE4608F255EE3CF00576087 /* Info.plist */,
 				1BE4608C255EE3CF00576087 /* Preview Content */,
@@ -577,6 +582,7 @@
 				1B9086AC25ED56B60022B504 /* PrayerGroup.swift in Sources */,
 				1B09935125DEDF2100F26512 /* IndividualPrayerView.swift in Sources */,
 				1B59B27A2572D6EE00E290F6 /* AddPrayerView.swift in Sources */,
+				1B7A12C6260142B10048629C /* CustomTextField.swift in Sources */,
 				1B9086AA25ED56B60022B504 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

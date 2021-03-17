@@ -129,7 +129,7 @@ struct GroupsView: View {
                             .padding([.top,.bottom, .trailing])
                             .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                             .sheet(isPresented: $showAddGroupView) {
-                                AddGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, user: user, showAddGroupView: $showAddGroupView)
+                                AddGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, user: sessionData.currentUser!, showAddGroupView: $showAddGroupView)
                             }
                             
                         }

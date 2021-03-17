@@ -8,55 +8,66 @@
 import SwiftUI
 import Amplify
 
+//  AddGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, user: user, showAddGroupView: $showAddGroupView)
+
+
 struct AddGroupView: View {
 
     @Binding var sessionDataPrayerGroups : [PrayerGroup]
-    var user : AuthUser
+    var user : User
     @Binding var showAddGroupView: Bool
 
-    @State var title : String           = "My New Group"
+    @State var title : String           = ""
         
 
     
     var body: some View {
-        Form {
-
-            Section(header: Text("TEXT")) {
-                TextField("Title", text: $title)
-
-            }
-            
-            
-            Section {
-                Button(action: {
-
-                    let toSavePrayerGroup = PrayerGroup(
-                        name: $title.wrappedValue
-                    )
-                    print("Save Prayer pressed for: \(toSavePrayerGroup.name ?? "no title given..?")")
+        
+        
+        NavigationView {
+                Form {
                     
-    
-                    Amplify.DataStore.save(toSavePrayerGroup) { result in
-                        switch(result) {
-                        case .success(let savedItem):
-                            print("Saved item: \(savedItem.id)")
-                        case .failure(let error):
-                            print("Could not save item to DataStore: \(error)")
+
+                    Section(header: Text("details")) {
+                        CustomTextField(placeholder: Text("title").foregroundColor(.gray), text: $title)
+                    }
+                    
+                    
+                    Section {
+                        Button(action: {
+
+                            let toSavePrayerGroup = PrayerGroup(
+                                name: $title.wrappedValue
+                            )
+                            print("Save Prayer pressed for: \(toSavePrayerGroup.name ?? "no title given..?")")
+                            
+            
+                            Amplify.DataStore.save(toSavePrayerGroup) { result in
+                                switch(result) {
+                                case .success(let savedItem):
+                                    print("Saved item: \(savedItem.id)")
+                                case .failure(let error):
+                                    print("Could not save item to DataStore: \(error)")
+                                }
+                            }
+
+                            // add the new Prayer in our sessionData, this will refresh UI
+                            self.sessionDataPrayerGroups.append(toSavePrayerGroup)
+                            showAddGroupView = false
+                            
+                        }) {
+                            Text("Create this Group")
                         }
                     }
-
-                    // add the new Prayer in our sessionData, this will refresh UI
-                    self.sessionDataPrayerGroups.append(toSavePrayerGroup)
-                    showAddGroupView = false
                     
-                }) {
-                    Text("Create this Prayer")
-                }
-            }
 
+                } //form
+                .navigationBarTitle(Text("Create a New Group"))
+                
+                
+                
+        } //navigationView
 
-
-        }
     }
 }
 
@@ -83,37 +94,72 @@ struct JoinGroupView: View {
     var body: some View {
        
         
-        VStack {
-            Text("Join which group?").font(.title).padding()
-            List {
-                ForEach(sessionDataPrayerGroups) { group in
-                    Button(action: {
+        NavigationView {
+            Form {
+                    ForEach(sessionDataPrayerGroups) { group in
+                        Button(action: {
 
-                        print("Join Group pressed for: \(group.name ?? group.id)")
-                        
-                        let pGroupUser = PrayerGroupUser(prayergroup: group, user: sessionDataUser)
-        
-                        Amplify.DataStore.save(pGroupUser) { result in
-                            switch(result) {
-                            case .success(let savedItem):
-                                print("Saved item: \(savedItem.id)")
-                            case .failure(let error):
-                                print("Could not save item to DataStore: \(error)")
+                            print("Join Group pressed for: \(group.name ?? group.id)")
+                            
+                            let pGroupUser = PrayerGroupUser(prayergroup: group, user: sessionDataUser)
+            
+                            Amplify.DataStore.save(pGroupUser) { result in
+                                switch(result) {
+                                case .success(let savedItem):
+                                    print("Saved item: \(savedItem.id)")
+                                case .failure(let error):
+                                    print("Could not save item to DataStore: \(error)")
+                                }
                             }
+
+                            // add the new Prayer in our sessionData, this will refresh UI
+                            self.myPrayerGroupUsers.append(pGroupUser)
+                            showJoinGroupView = false
+                            
+                        }) {
+                            Text(group.name ?? group.id)
                         }
-
-                        // add the new Prayer in our sessionData, this will refresh UI
-                        self.myPrayerGroupUsers.append(pGroupUser)
-                        showJoinGroupView = false
-                        
-                    }) {
-                        Text(group.name ?? group.id)
                     }
-                }
+
             }.listStyle(InsetGroupedListStyle())
+            .navigationTitle(Text("Join which group?"))
+            
         }
+                
+    }
+}
 
 
-        
+
+
+//  AddGroupView(sessionDataPrayerGroups: $sessionData.prayerGroups, user: user, showAddGroupView: $showAddGroupView)
+
+struct AddGroupView_Previews: PreviewProvider {
+    @State static var pray: [PrayerGroup] = []
+    @State static var val = true
+
+
+    static var previews: some View {
+        AddGroupView(sessionDataPrayerGroups: $pray, user: User(id: "ID_user123"), showAddGroupView: $val)
+       // Text("Hello world")
+    }
+}
+
+
+struct JoinGroupView_Previews: PreviewProvider {
+    @State static var pray: [PrayerGroup] = [
+        PrayerGroup(id: "id1", name: "Rivendell"),
+        PrayerGroup(id: "id1", name: "Gondor"),
+        PrayerGroup(id: "id1", name: "Rohan"),
+        PrayerGroup(id: "id1", name: "Mordor"),
+        PrayerGroup(id: "id1", name: "Mirkwood"),
+    ]
+    @State static var prayUser: [PrayerGroupUser] = []
+    @State static var val = true
+
+
+    static var previews: some View {
+        JoinGroupView(sessionDataPrayerGroups: $pray, sessionDataUser: User(id: "ID_user123"), showJoinGroupView: $val, myPrayerGroupUsers: $prayUser)
+        // Text("Hello world")
     }
 }

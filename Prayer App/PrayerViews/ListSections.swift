@@ -136,7 +136,7 @@ struct OthersPrayersSection: View {
 
 struct GroupPrayerSection: View {
     
-    var prayers: [Prayer]
+    @Binding var prayers: [Prayer]
     var pGroup: PrayerGroup
     
     
@@ -149,6 +149,16 @@ struct GroupPrayerSection: View {
         [.twoOrMore]
     ]
     
+//    init(prayers: Binding<[Prayer]>, group: PrayerGroup) {
+//        self._prayers = prayers
+//        self.pGroup = group
+//
+//        print("beep")
+//        loadPrayerListByGroup(groupID: pGroup.id)
+//
+//    }
+//
+//
     var body: some View{
         Section(header: HStack {
             Image(systemName: "person.3.fill")
@@ -168,25 +178,6 @@ struct GroupPrayerSection: View {
                     }
 
             }
-//            .onDelete { indices in
-//                indices.forEach {
-//                    // removing from session data will refresh UI
-//                    let Prayer = prayers.remove(at: $0)
-//
-//                    // asynchronously remove from database
-//                    //AWS_Backend.shared.deletePrayer(Prayer: Prayer)
-//                    Amplify.DataStore.delete(Prayer) {
-//                        result in
-//                        switch(result) {
-//                        case .success:
-//                            print("Deleted item: \(Prayer.id)")
-//                        case .failure(let error):
-//                            print("Could not update data in Datastore: \(error)")
-//                        }
-//                    }
-//                   
-//                }
-//            }
         }
     }
 }
