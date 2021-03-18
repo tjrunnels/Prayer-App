@@ -18,43 +18,78 @@ struct SignUpView : View {
     @State var email : String    = ""
     @State var password : String    = ""
     @State var code : String    = ""
+    
+    @State var isButtonActive = false
+
 
 //    @ObservedObject private var userData: SessionData = .shared
     
     var body: some View {
-        VStack {
-                    
-            Text("Sign Up")
-                .font(.largeTitle)
-                .bold()
-            TextField("Username", text: $username)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-            TextField("Email", text: $email)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-            TextField("Password", text: $password)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
+        FakeFormView(viewTitle: "Sign Up", spacer: 40) {
+        
+//
+//            Form {
+//                CustomTextField_Section(placeholderText: "prayermaster500", text: $username, sectionTitle: "Username")
+//                CustomTextField_Section(placeholderText: "pm500@gmail.com", text: $email, sectionTitle: "Email")
+//                CustomTextField_Section(placeholderText: "PM500pa$$",       text: $password, sectionTitle: "password")
+//            }
+            
+            FakeFormField(sectionText: "Username", placeholderText: "prayermaster500", text: $username)
+                .padding(.bottom, 20)
+            FakeFormField(sectionText: "Email", placeholderText: "pm500@gmail.com", text: $email)
+                .padding(.bottom, 20)
+            FakeFormField(sectionText: "password", placeholderText: "PM501pa$$", text: $password)
+                .padding(.bottom, 20)
+
+            
+            
+            Spacer()
+                .frame(height:25)
                                     
-            Button(action: {
-                sessionManager.signUp(username: self.username, email: self.email, password: self.password)
-                print("signing up: \(self.username)")
+            VStack {
+                
+                //TODO: ok so this whole button thing isn't working.  I need to encompas the signup and confirm in one parent view and then 
+                NavigationLink(
+                    destination: ConfirmationView(username: self.username),
+                    isActive: $isButtonActive
+                ) {
+                    Button(action: {
+                        if(sessionManager.signUp(username: self.username, email: self.email, password: self.password)) {
+                          //  print("signup of \(username) successful, moving to confirmation")
+                        }
+                        else {
+                           // print("signup of \(username) failed")
+                        }
+                        
+                        print("signing up: \(self.username)")
+                    }
+                    ){
+                        Text("Sign Up")
+                        .padding()
+                        .foregroundColor(.black)
+                        .background(Color("Element"))
+                        .cornerRadius(30)
+                            .scaleEffect(1.2)
+                    }
+                }
+            
+            
+            
+                Spacer()
+                    
+
+                
+                Button(action: {
+                    print("login pressed on signin screen")
+                    
+                }, label: {
+                    Text("Already have an account? Log in")
+
+                }).padding(.bottom)
+
+            
             }
-            ){
-                Text("Sign Up")
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .cornerRadius(30)
-                .scaleEffect(0.8)
-            }
+            
 
         }
 
@@ -64,6 +99,31 @@ struct SignUpView : View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+            SignUpView()
+        
+    }
+}
+
+struct FakeFormField: View {
+    var sectionText: String
+    var placeholderText: String
+    @Binding var text: String
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Text(sectionText.uppercased())
+                    .font(Font.custom("SF Pro Text", size: 13.0))
+                    .foregroundColor(.gray)
+                    .padding(.leading)
+                Spacer()
+            }
+            CustomTextField(placeholderText: self.placeholderText, text: $text)
+                .padding(.leading, 20)
+                .frame( height: 50)
+                .background(Color(.white))
+                .cornerRadius(10)
+                .padding([.leading, .trailing], 20)
+        }
     }
 }

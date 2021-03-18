@@ -16,7 +16,7 @@ struct UserView: View {
     @EnvironmentObject var sessionManager : AuthSessionManager
     @State var currentUserInfo: User?
     
-    
+    @State var feedback: String = ""
     
     
     var body: some View {
@@ -66,6 +66,8 @@ struct UserView: View {
                         Button(action: {
                             print("Signing Out")
                             sessionManager.signOut()
+                            feedback = "signed out.  please restart the app"
+                            //TODO: switch view to Login
                         }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 5)
@@ -84,12 +86,39 @@ struct UserView: View {
             }.ignoresSafeArea(.container, edges: .top)
             
             
+            Text(feedback).padding()
+
+            if(currentUserInfo == nil) {
+                Button(action: {
+                    
+                    let item = User(id: user.userId, username: user.username)
+                    Amplify.DataStore.save(item) { result in
+                        switch(result) {
+                        case .success(let savedItem):
+                            print("Saved item: \(savedItem.id)")
+                            feedback = "user created, please restart the app"
+                        case .failure(let error):
+                            print("Could not save item to DataStore: \(error)")
+                            feedback = "user creation failed, see log for error"
+                        }
+                    }
+                    
+                    
+                }, label: {
+                    Text("create a PrayerApp User for \(user.username)")
+                })
+            }
+            
+            
+            
             Spacer()
             
         }
         
         }.onAppear(perform: {
             print("getting User")
+            
+            //TODO: right now this view finds the user itself, change this to getting it from sessionData
             
             Amplify.DataStore.query(User.self).sink {
                 if case let .failure(error) = $0 {

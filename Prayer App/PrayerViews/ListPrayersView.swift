@@ -81,7 +81,7 @@ struct ListPrayersView: View {
                     ZStack{
                         List {
                             MyPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
-                            OthersPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
+                           // OthersPrayersSection(prayers: $sessionData.prayers, currentUserID: user.userId)
                             ForEach(Array(sessionData.currentUser?.prayergroups ?? []), id: \.self) { pGroupU in
                                 GroupPrayerSection(prayers: $sessionData.prayers, pGroup: pGroupU.prayergroup)   //using Array(Set([a,b,c])) returns only the unique elements of the array.  Good here becuase the list doesn't need to be binding... or does it..?
                             }
@@ -112,6 +112,9 @@ struct ListPrayersView: View {
                             }.sheet(isPresented: $showAddPrayerView) {
                                 AddPrayerView(sessionDataPrayers: $sessionData.prayers, user: sessionData.currentUser!, showAddPrayerView: $showAddPrayerView)
                             }
+                            
+                            
+                            
                             
                         }//add button vstack
                         

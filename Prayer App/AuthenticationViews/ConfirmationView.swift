@@ -14,44 +14,49 @@ struct ConfirmationView: View {
 
     @State var code : String = ""
 
+    
     var body: some View {
-        VStack {
-                    
-            Text("Verify Email Address")
-                .font(.largeTitle)
-                .bold()
-            Text("Username: \(username)")
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
+        
+        FakeFormView(viewTitle: "Verify Email Address", spacer: 40) {
+        
 
-            TextField("Confirmation Code", text: $code)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-                                    
-            Button(action: {
-                sessionManager.confirm(username: self.username, code: self.code)
-                print("signing up: \(self.username)")
+            VStack {
+                HStack {
+                    Text("for: ").font(.subheadline)
+                    Text(username).font(.title)
+                }
+                Spacer()
+               
+                FakeFormField(sectionText: "Confirmation Code", placeholderText: "012345", text: $code)
+                    .padding(.bottom, 20)
+                
+                Button(action: {
+                    sessionManager.confirm(username: self.username, code: self.code)
+                    print("signing up: \(self.username)")
+                }
+                ){
+                    Text("Confirm")
+                    .padding()
+                    .foregroundColor(.black)
+                    .background(Color("Element"))
+                    .cornerRadius(30)
+                        .scaleEffect(1.2)
+                }
+                
+                Spacer()
+                Spacer()
+                Spacer()
             }
-            ){
-                Text("Confirm")
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .cornerRadius(30)
-                .scaleEffect(0.8)
-            }
-
         }
-
+        
     }
+    
+    
+    
 }
 
 struct ConfirmationView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfirmationView(username: "previewUsername")
+        ConfirmationView(username: "supertom500")
     }
 }

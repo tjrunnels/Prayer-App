@@ -39,6 +39,8 @@
 		1B9086AE25ED56B60022B504 /* Prayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9086A325ED56B50022B504 /* Prayer.swift */; };
 		1B9086B025ED79540022B504 /* ListSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9086AF25ED79540022B504 /* ListSections.swift */; };
 		1BCC876125718E05008AEB72 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCC876025718E05008AEB72 /* MainTabView.swift */; };
+		1BD3029726028C0400D9692D /* FakeFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3029626028C0400D9692D /* FakeFormView.swift */; };
+		1BD302992603C48500D9692D /* FlowSignUpAndConfrim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD302982603C48500D9692D /* FlowSignUpAndConfrim.swift */; };
 		1BD35615257557C800F75451 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1BD35614257557C800F75451 /* README.txt */; };
 		1BE46087255EE3CD00576087 /* Prayer_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE46086255EE3CD00576087 /* Prayer_AppApp.swift */; };
 		1BE46089255EE3CD00576087 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE46088255EE3CD00576087 /* ContentView.swift */; };
@@ -106,6 +108,8 @@
 		1B9086A325ED56B50022B504 /* Prayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prayer.swift; sourceTree = "<group>"; };
 		1B9086AF25ED79540022B504 /* ListSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSections.swift; sourceTree = "<group>"; };
 		1BCC876025718E05008AEB72 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		1BD3029626028C0400D9692D /* FakeFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeFormView.swift; sourceTree = "<group>"; };
+		1BD302982603C48500D9692D /* FlowSignUpAndConfrim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowSignUpAndConfrim.swift; sourceTree = "<group>"; };
 		1BD35614257557C800F75451 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		1BE46083255EE3CD00576087 /* Prayer App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Prayer App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE46086255EE3CD00576087 /* Prayer_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prayer_AppApp.swift; sourceTree = "<group>"; };
@@ -199,10 +203,11 @@
 		1BCC8765257191EB008AEB72 /* AuthenticationViews */ = {
 			isa = PBXGroup;
 			children = (
-				1B8DDB172565800E00ADCB93 /* SignUpView.swift */,
 				1B8DDB122565800000ADCB93 /* LoginView.swift */,
+				1B8DDB172565800E00ADCB93 /* SignUpView.swift */,
 				1BE521DF2566B90A001A365F /* ConfirmationView.swift */,
 				1BE521E42566BC4C001A365F /* SessionView.swift */,
+				1BD302982603C48500D9692D /* FlowSignUpAndConfrim.swift */,
 			);
 			path = AuthenticationViews;
 			sourceTree = "<group>";
@@ -257,6 +262,7 @@
 				1BE4608F255EE3CF00576087 /* Info.plist */,
 				1BE4608C255EE3CF00576087 /* Preview Content */,
 				1BE46088255EE3CD00576087 /* ContentView.swift */,
+				1BD3029626028C0400D9692D /* FakeFormView.swift */,
 			);
 			path = "Prayer App";
 			sourceTree = "<group>";
@@ -564,6 +570,7 @@
 				1B9086AD25ED56B60022B504 /* Answer.swift in Sources */,
 				1B1208322572FE52004C185D /* AccountView.swift in Sources */,
 				1B59B27F2572DA3F00E290F6 /* ListPrayersView.swift in Sources */,
+				1BD302992603C48500D9692D /* FlowSignUpAndConfrim.swift in Sources */,
 				1B1820B42562BFB000AC42EE /* CaptureImageView.swift in Sources */,
 				1BE46087255EE3CD00576087 /* Prayer_AppApp.swift in Sources */,
 				1B9086A525ED56B60022B504 /* PrayerGroupUser.swift in Sources */,
@@ -580,6 +587,7 @@
 				1B9086A425ED56B60022B504 /* Answer+Schema.swift in Sources */,
 				1B8DDB132565800000ADCB93 /* LoginView.swift in Sources */,
 				1B9086AC25ED56B60022B504 /* PrayerGroup.swift in Sources */,
+				1BD3029726028C0400D9692D /* FakeFormView.swift in Sources */,
 				1B09935125DEDF2100F26512 /* IndividualPrayerView.swift in Sources */,
 				1B59B27A2572D6EE00E290F6 /* AddPrayerView.swift in Sources */,
 				1B7A12C6260142B10048629C /* CustomTextField.swift in Sources */,

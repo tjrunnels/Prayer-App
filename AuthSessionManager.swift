@@ -43,7 +43,7 @@ final class AuthSessionManager: ObservableObject {
             username: username,
             password: password
         ) { [weak self] result in
-            
+            print("Auth.signIn results: \(result)")
             switch  result {
             case .success(let signInResult):
                 //redundant... not sure why:  AWS_Backend.shared.updateSessionData(withSignInStatus: true)
@@ -77,7 +77,9 @@ final class AuthSessionManager: ObservableObject {
     }
     
     
-    func signUp(username: String, email: String, password: String) {
+    func signUp(username: String, email: String, password: String) -> Bool {
+        
+        var tmpBool: Bool = false
         
         let userAttributes = [AuthUserAttribute(.email, value: email)]
         let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
@@ -95,18 +97,23 @@ final class AuthSessionManager: ObservableObject {
                     DispatchQueue.main.async {
                         self?.authState = .confirmCode(username: username)
                     }
-                    
+                    tmpBool = (true);
                 } else {
                     print("SignUp Complete")
+                    tmpBool = (true);
                 }
             case .failure(let error):
                 print("An error occurred while registering a user \(error)")
+                tmpBool = false
+                
             }
         }
-        
+        return tmpBool
     }
     
-    func confirm(username: String, code: String) {
+    func confirm(username: String, code: String) -> Bool {
+        var tmpBool: Bool = false
+        
         _ = Amplify.Auth.confirmSignUp(
             for: username,
             confirmationCode: code
@@ -119,11 +126,13 @@ final class AuthSessionManager: ObservableObject {
                     DispatchQueue.main.async {
                         self?.showLogin()
                     }
+                    tmpBool = true
                 }
             case .failure(let error):
                 print("failed to confirm code:", error)
             }
         }
+    return tmpBool
     }
     
     

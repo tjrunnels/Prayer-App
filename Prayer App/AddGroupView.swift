@@ -146,7 +146,7 @@ struct AddGroupView_Previews: PreviewProvider {
 }
 
 
-struct JoinGroupView_Previews: PreviewProvider {
+struct JoinAGroupView_Previews: PreviewProvider {
     @State static var pray: [PrayerGroup] = [
         PrayerGroup(id: "id1", name: "Rivendell"),
         PrayerGroup(id: "id1", name: "Gondor"),

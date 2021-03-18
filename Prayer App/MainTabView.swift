@@ -92,6 +92,15 @@ struct MainTabView: View {
                             Text("User")
                         }
                         .environmentObject(authSessionManager)
+                    
+                    
+                    
+                    FlowSignUpAndConfrim()
+                        .tabItem {
+                            Image(systemName: "gear")
+                            Text("test Tab")
+                        }
+                        .environmentObject(authSessionManager)
                                    
                    
                     
