@@ -14,13 +14,15 @@ struct LoginView: View {
     @State var username : String    = ""
     @State var password : String    = ""
     @State var showSignUpView = false
+    @State var feedback : String    = ""
 
     let onLogin: (AuthUser) -> Void
     
     var body: some View {
         
         FakeFormView(viewTitle: "Log In", spacer: 40) {
-        
+            
+            Text(feedback).font(.caption).foregroundColor(.red)
         
             FakeFormField(sectionText: "Username", placeholderText: "prayermaster500", text: $username)
                 .padding(.bottom, 20)
@@ -30,7 +32,7 @@ struct LoginView: View {
                     
             VStack {
                 Button(action: {
-                    loginViewModel.login(completion: onLogin, username: self.username, password: self.password)
+                    handlelogin(completion: onLogin, username: self.username, password: self.password, feedback: $feedback)
                     print("signing in: \(self.username)")
                 }
                 ){
@@ -50,7 +52,7 @@ struct LoginView: View {
                     .scaleEffect(0.75)
                 }
                 .sheet(isPresented: $showSignUpView) {
-                    FlowSignUpAndConfrim()
+                    FlowSignUpAndConfrim(showThisSheet: $showSignUpView)
                 }
                 
                 
@@ -75,6 +77,27 @@ struct LoginView: View {
     
     } //end of body
 
+    func handlelogin(completion: @escaping (AuthUser) -> Void, username: String, password: String, feedback: Binding<String>) {
+        print("attempting Sign in of " + username)
+                
+            Amplify.Auth.signIn(username: username, password: password) { result in
+                switch result {
+                case .success:
+                    print("Sign in succeeded")
+                    if let gotUser = Amplify.Auth.getCurrentUser() {
+                        print("Session with user: " + gotUser.username + " begins.")
+                        completion(gotUser)
+                    }
+                case .failure(let error):
+                    print("Sign in failed \(error)")
+                    feedback.wrappedValue = "\(error)"
+                }
+            }
+
+        
+        
+  
+    }
     
 }//end of View
 
@@ -84,9 +107,10 @@ extension LoginView {
     class LoginViewModel: ObservableObject {
         @Published var username = String()
         
-        func login(completion: @escaping (AuthUser) -> Void, username: String, password: String) {
+        func login(completion: @escaping (AuthUser) -> Void, username: String, password: String) -> String {
             print("attempting Sign in of " + username)
             
+            var returnString = ""
             
             
             //Sign in failed AuthError: There is already a user which is signed in. Please log out the user before calling showSignIn.
@@ -110,18 +134,19 @@ extension LoginView {
                     switch result {
                     case .success:
                         print("Sign in succeeded")
+                        if let gotUser = Amplify.Auth.getCurrentUser() {
+                            print("Session with user: " + gotUser.username + " begins.")
+                            completion(gotUser)
+                        }
                     case .failure(let error):
                         print("Sign in failed \(error)")
+                        returnString = "\(error)"
                     }
                 }
 
             
-            if let gotUser = Amplify.Auth.getCurrentUser() {
-                print("Session with user: " + gotUser.username + " begins.")
-                completion(gotUser)
-                
-            }
             
+            return returnString
           
         }
     }

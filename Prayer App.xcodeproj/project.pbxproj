@@ -181,6 +181,35 @@
 			path = PrayerViews;
 			sourceTree = "<group>";
 		};
+		1B65E9F526053CEC002137E8 /* HighLevelStuff */ = {
+			isa = PBXGroup;
+			children = (
+				1BE46086255EE3CD00576087 /* Prayer_AppApp.swift */,
+				1BCC876025718E05008AEB72 /* MainTabView.swift */,
+				1B59B2742572D6B900E290F6 /* SessionData.swift */,
+				1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */,
+			);
+			path = HighLevelStuff;
+			sourceTree = "<group>";
+		};
+		1B65E9F626053D27002137E8 /* GroupViews */ = {
+			isa = PBXGroup;
+			children = (
+				1B41092525F1917B0080F908 /* GroupsView.swift */,
+				1B5B38C525F2B8AE009401EC /* AddGroupView.swift */,
+			);
+			path = GroupViews;
+			sourceTree = "<group>";
+		};
+		1B65E9F726053D5C002137E8 /* myLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				1BD3029626028C0400D9692D /* FakeFormView.swift */,
+				1B7A12C5260142B10048629C /* CustomTextField.swift */,
+			);
+			path = myLibrary;
+			sourceTree = "<group>";
+		};
 		1B90869825ED56B50022B504 /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,7 +248,6 @@
 				1B09934625DDBBF600F26512 /* DataHandler.swift */,
 				1B74612425DDB7EB00015B62 /* profileDemoData.json */,
 				1BD35614257557C800F75451 /* README.txt */,
-				1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */,
 				1B90866625ED504A0022B504 /* amplifyconfiguration.json */,
 				1B90866725ED504A0022B504 /* awsconfiguration.json */,
 				1BE46085255EE3CD00576087 /* Prayer App */,
@@ -244,25 +272,21 @@
 		1BE46085255EE3CD00576087 /* Prayer App */ = {
 			isa = PBXGroup;
 			children = (
+				1B65E9F726053D5C002137E8 /* myLibrary */,
+				1B65E9F526053CEC002137E8 /* HighLevelStuff */,
+				1B65E9F626053D27002137E8 /* GroupViews */,
 				1B5B38C225F2B459009401EC /* PrayerViews */,
 				1B90869825ED56B50022B504 /* models */,
 				1B63104125FFC05000830901 /* AWSModels_Extensions.swift */,
-				1B59B2742572D6B900E290F6 /* SessionData.swift */,
 				1B2766DC2572F79E0031C94C /* Objects */,
 				1BCC8765257191EB008AEB72 /* AuthenticationViews */,
-				1BE46086255EE3CD00576087 /* Prayer_AppApp.swift */,
-				1BCC876025718E05008AEB72 /* MainTabView.swift */,
-				1B41092525F1917B0080F908 /* GroupsView.swift */,
-				1B5B38C525F2B8AE009401EC /* AddGroupView.swift */,
 				1B1820B32562BFB000AC42EE /* CaptureImageView.swift */,
 				1B1208312572FE52004C185D /* AccountView.swift */,
 				1B09934B25DDBE3C00F26512 /* UserView.swift */,
-				1B7A12C5260142B10048629C /* CustomTextField.swift */,
 				1BE4608A255EE3CF00576087 /* Assets.xcassets */,
 				1BE4608F255EE3CF00576087 /* Info.plist */,
 				1BE4608C255EE3CF00576087 /* Preview Content */,
 				1BE46088255EE3CD00576087 /* ContentView.swift */,
-				1BD3029626028C0400D9692D /* FakeFormView.swift */,
 			);
 			path = "Prayer App";
 			sourceTree = "<group>";

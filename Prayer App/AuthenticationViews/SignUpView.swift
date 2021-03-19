@@ -34,11 +34,11 @@ struct SignUpView : View {
 //                CustomTextField_Section(placeholderText: "PM500pa$$",       text: $password, sectionTitle: "password")
 //            }
             
-            FakeFormField(sectionText: "Username", placeholderText: "prayermaster500", text: $username)
+            FakeFormField(sectionText: "Username", placeholderText: "prayermaster500", text: $username, disableAutoCorrect: true)
                 .padding(.bottom, 20)
-            FakeFormField(sectionText: "Email", placeholderText: "pm500@gmail.com", text: $email)
+            FakeFormField(sectionText: "Email", placeholderText: "pm500@gmail.com", text: $email, disableAutoCorrect: true)
                 .padding(.bottom, 20)
-            FakeFormField(sectionText: "password", placeholderText: "PM501pa$$", text: $password)
+            FakeFormField(sectionText: "password", placeholderText: "PM501pa$$", text: $password, disableAutoCorrect: true)
                 .padding(.bottom, 20)
 
             
@@ -108,6 +108,7 @@ struct FakeFormField: View {
     var sectionText: String
     var placeholderText: String
     @Binding var text: String
+    var disableAutoCorrect = false
     
     var body: some View {
         VStack {
@@ -118,7 +119,7 @@ struct FakeFormField: View {
                     .padding(.leading)
                 Spacer()
             }
-            CustomTextField(placeholderText: self.placeholderText, text: $text)
+            CustomTextField(placeholderText: self.placeholderText, text: $text, disableAutoCorrect: disableAutoCorrect)
                 .padding(.leading, 20)
                 .frame( height: 50)
                 .background(Color(.white))

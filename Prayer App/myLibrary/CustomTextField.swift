@@ -14,19 +14,22 @@ struct CustomTextField: View {
     @Binding var text: String
     var editingChanged: (Bool)->() = { _ in }
     var commit: ()->() = { }
+    var disableAutoCorrect: Bool
 
-    init(placeholder: Text, text: Binding<String>, editingChanged: @escaping (Bool) -> () = { _ in }, commit: @escaping () -> () = { }) {
+    init(placeholder: Text, text: Binding<String>, disableAutoCorrect: Bool = false, editingChanged: @escaping (Bool) -> () = { _ in }, commit: @escaping () -> () = { }) {
         self.placeholder = placeholder
         self._text = text
         self.editingChanged = editingChanged
         self.commit = commit
+        self.disableAutoCorrect = disableAutoCorrect
     }
     
-    init(placeholderText: String, text: Binding<String>, editingChanged: @escaping (Bool) -> () = { _ in }, commit: @escaping () -> () = { }) {
+    init(placeholderText: String, text: Binding<String>, disableAutoCorrect: Bool = false, editingChanged: @escaping (Bool) -> () = { _ in }, commit: @escaping () -> () = { }) {
         self.placeholder = Text(placeholderText).foregroundColor(.gray)
         self._text = text
         self.editingChanged = editingChanged
         self.commit = commit
+        self.disableAutoCorrect = disableAutoCorrect
     }
     
 
@@ -34,6 +37,7 @@ struct CustomTextField: View {
         ZStack(alignment: .leading) {
             if text.isEmpty { placeholder }
             TextField("", text: $text, onEditingChanged: editingChanged, onCommit: commit)
+                .disableAutocorrection(disableAutoCorrect)
         }
     }
 }

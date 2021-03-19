@@ -71,6 +71,7 @@ struct MainTabView: View {
                         .environmentObject(self.sessionData)
                     
                     
+                    
                     GroupsView(user: user)
                         .tabItem {
                             Image(systemName: "person.3.fill")
@@ -78,12 +79,7 @@ struct MainTabView: View {
                         }
                         .environmentObject(authSessionManager)
                         .environmentObject(self.sessionData)
-        //            AccountView (user: user)
-        //                .tabItem {
-        //                    Image(systemName: "person.crop.circle")
-        //                    Text("Account")
-        //                }
-        //                .environmentObject(sessionManager)
+                    
                     
                     
                     UserView (user: self.user)
@@ -92,17 +88,10 @@ struct MainTabView: View {
                             Text("User")
                         }
                         .environmentObject(authSessionManager)
+                        .environmentObject(self.sessionData)
+
                     
                     
-                    
-                    FlowSignUpAndConfrim()
-                        .tabItem {
-                            Image(systemName: "gear")
-                            Text("test Tab")
-                        }
-                        .environmentObject(authSessionManager)
-                                   
-                   
                     
                 }//tabview
                 

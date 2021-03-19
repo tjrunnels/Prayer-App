@@ -15,12 +15,15 @@ import AmplifyPlugins
 struct FlowSignUpAndConfrim: View {
     @EnvironmentObject var sessionManager: AuthSessionManager
     
+    @Binding var showThisSheet : Bool
+    
     @State var username : String    = ""
     @State var email : String    = ""
     @State var password : String    = ""
     @State var code : String    = ""
     
     @State var isConfirmView = false
+    @State var feedback: String = ""
 
 
 //    @ObservedObject private var userData: SessionData = .shared
@@ -33,6 +36,8 @@ struct FlowSignUpAndConfrim: View {
         case false:
             FakeFormView(viewTitle: "Sign Up", spacer: 40) {
             
+                Text(feedback).font(.caption).foregroundColor(.red)
+
  
                 FakeFormField(sectionText: "Username", placeholderText: "prayermaster500", text: $username)
                     .padding(.bottom, 20)
@@ -49,18 +54,7 @@ struct FlowSignUpAndConfrim: View {
                 VStack {
 
                         Button(action: {
-//                            if(sessionManager.signUp(username: self.username, email: self.email, password: self.password)) {
-//                                self.isConfirmView = true
-//                                print("signup of \(username) successful, moving to confirmation")
-//                            }
-//                            else {
-//                                print("signup of \(username) failed")
-//                            }
-                            
-                            handleSignUp(username: self.username, password: self.password, email: self.email)
-                        
-                            isConfirmView = true
-                           // print("signing up: \(self.username)")
+                            handleSignUp(username: self.username, password: self.password, email: self.email, returnBool: $isConfirmView, feedback: $feedback)
                         }
                         ){
                             Text("Sign Up")
@@ -92,6 +86,8 @@ struct FlowSignUpAndConfrim: View {
         case true:
             FakeFormView(viewTitle: "Verify Email Address", spacer: 40) {
             
+                Text(feedback).font(.caption).foregroundColor(.red)
+
 
                 VStack {
                     HStack {
@@ -104,14 +100,7 @@ struct FlowSignUpAndConfrim: View {
                         .padding(.bottom, 20)
                     
                     Button(action: {
-                        handleConfirm(for: username, with: self.code)
-//                        if(sessionManager.confirm(username: self.username, code: self.code)) {
-//                            print("confirmed: " + username)
-//                        }
-//                        else {
-//                            print("confirmation of \(username) failed")
-//                        }
-                        //  print("signing up: \(self.username)")
+                        handleConfirm(for: username, with: self.code, confirmFailed: $showThisSheet, feedback: $feedback)
                     }
                     ){
                         Text("Confirm")
@@ -137,28 +126,13 @@ struct FlowSignUpAndConfrim: View {
     
     
 //    ///came from https://docs.amplify.aws/lib/auth/signin/q/platform/ios#register-a-user
-//    func handleSignUp(username: String, password: String, email: String) -> AnyCancellable {
-//        let userAttributes = [AuthUserAttribute(.email, value: email)]
-//        let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
-//        let sink = Amplify.Auth.signUp(username: username, password: password, options: options)
-//            .resultPublisher
-//            .sink {
-//                if case let .failure(authError) = $0 {
-//                    print("An error occurred while registering a user \(authError)")
-//                }
-//            }
-//            receiveValue: { signUpResult in
-//                if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
-//                    print("Delivery details: \(String(describing: deliveryDetails))")
-//                } else {
-//                    print("SignUp Complete")
-//                }
-//
-//            }
-//        return sink
-//    }
+
     
-    func handleSignUp(username: String, password: String, email: String) {
+    func handleSignUp(username: String, password: String, email: String, returnBool: Binding<Bool>, feedback: Binding<String>) {
+        
+        
+        //TODO: email addresses are not totally verified by AWS.  YOu can do it without a period
+        
         let userAttributes = [AuthUserAttribute(.email, value: email)]
         let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
         Amplify.Auth.signUp(username: username, password: password, options: options) { result in
@@ -166,36 +140,34 @@ struct FlowSignUpAndConfrim: View {
             case .success(let signUpResult):
                 if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
                     print("Delivery details \(String(describing: deliveryDetails))")
+                    returnBool.wrappedValue = true
+                    feedback.wrappedValue = ""
                 } else {
                     print("SignUp Complete")
+                    returnBool.wrappedValue = true
+                    feedback.wrappedValue = ""
                 }
             case .failure(let error):
                 print("An error occurred while registering a user \(error)")
+                returnBool.wrappedValue = false
+                feedback.wrappedValue = "\(error)"
             }
         }
     }
     
     /// came from https://docs.amplify.aws/lib/auth/signin/q/platform/ios#register-a-user
-//    func handleConfirm(for username: String, with confirmationCode: String) -> AnyCancellable {
-//        Amplify.Auth.confirmSignUp(for: username, confirmationCode: confirmationCode)
-//            .resultPublisher
-//            .sink {
-//                if case let .failure(authError) = $0 {
-//                    print("An error occurred while confirming sign up \(authError)")
-//                }
-//            }
-//            receiveValue: { _ in
-//                print("Confirm signUp succeeded")
-//            }
-//    }
-//
-    func handleConfirm(for username: String, with confirmationCode: String) {
+
+    func handleConfirm(for username: String, with confirmationCode: String, confirmFailed: Binding<Bool>, feedback: Binding<String>) {
         Amplify.Auth.confirmSignUp(for: username, confirmationCode: confirmationCode) { result in
             switch result {
             case .success:
                 print("Confirm signUp succeeded")
+                confirmFailed.wrappedValue = false
+                feedback.wrappedValue = ""
             case .failure(let error):
                 print("An error occurred while confirming sign up \(error)")
+                confirmFailed.wrappedValue = true
+                feedback.wrappedValue = "\(error)"
             }
         }
     }
