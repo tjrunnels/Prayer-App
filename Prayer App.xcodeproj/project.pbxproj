@@ -10,7 +10,6 @@
 		1B09934725DDBBF600F26512 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B09934625DDBBF600F26512 /* DataHandler.swift */; };
 		1B09934C25DDBE3C00F26512 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B09934B25DDBE3C00F26512 /* UserView.swift */; };
 		1B09935125DEDF2100F26512 /* IndividualPrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B09935025DEDF2100F26512 /* IndividualPrayerView.swift */; };
-		1B1208322572FE52004C185D /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1208312572FE52004C185D /* AccountView.swift */; };
 		1B1820B42562BFB000AC42EE /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1820B32562BFB000AC42EE /* CaptureImageView.swift */; };
 		1B41092625F1917B0080F908 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B41092525F1917B0080F908 /* GroupsView.swift */; };
 		1B59B2752572D6B900E290F6 /* SessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B59B2742572D6B900E290F6 /* SessionData.swift */; };
@@ -43,7 +42,6 @@
 		1BD302992603C48500D9692D /* FlowSignUpAndConfrim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD302982603C48500D9692D /* FlowSignUpAndConfrim.swift */; };
 		1BD35615257557C800F75451 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1BD35614257557C800F75451 /* README.txt */; };
 		1BE46087255EE3CD00576087 /* Prayer_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE46086255EE3CD00576087 /* Prayer_AppApp.swift */; };
-		1BE46089255EE3CD00576087 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE46088255EE3CD00576087 /* ContentView.swift */; };
 		1BE4608B255EE3CF00576087 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BE4608A255EE3CF00576087 /* Assets.xcassets */; };
 		1BE4608E255EE3CF00576087 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BE4608D255EE3CF00576087 /* Preview Assets.xcassets */; };
 		1BE46099255EE3CF00576087 /* Prayer_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE46098255EE3CF00576087 /* Prayer_AppTests.swift */; };
@@ -78,7 +76,6 @@
 		1B09934625DDBBF600F26512 /* DataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		1B09934B25DDBE3C00F26512 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		1B09935025DEDF2100F26512 /* IndividualPrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualPrayerView.swift; sourceTree = "<group>"; };
-		1B1208312572FE52004C185D /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		1B1820B32562BFB000AC42EE /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		1B41092525F1917B0080F908 /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		1B59B2742572D6B900E290F6 /* SessionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionData.swift; sourceTree = "<group>"; };
@@ -113,7 +110,6 @@
 		1BD35614257557C800F75451 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		1BE46083255EE3CD00576087 /* Prayer App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Prayer App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE46086255EE3CD00576087 /* Prayer_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prayer_AppApp.swift; sourceTree = "<group>"; };
-		1BE46088255EE3CD00576087 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1BE4608A255EE3CF00576087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BE4608D255EE3CF00576087 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1BE4608F255EE3CF00576087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,13 +158,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1B2766DC2572F79E0031C94C /* Objects */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Objects;
-			sourceTree = "<group>";
-		};
 		1B5B38C225F2B459009401EC /* PrayerViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,17 +265,14 @@
 				1B65E9F526053CEC002137E8 /* HighLevelStuff */,
 				1B65E9F626053D27002137E8 /* GroupViews */,
 				1B5B38C225F2B459009401EC /* PrayerViews */,
+				1BCC8765257191EB008AEB72 /* AuthenticationViews */,
 				1B90869825ED56B50022B504 /* models */,
 				1B63104125FFC05000830901 /* AWSModels_Extensions.swift */,
-				1B2766DC2572F79E0031C94C /* Objects */,
-				1BCC8765257191EB008AEB72 /* AuthenticationViews */,
 				1B1820B32562BFB000AC42EE /* CaptureImageView.swift */,
-				1B1208312572FE52004C185D /* AccountView.swift */,
-				1B09934B25DDBE3C00F26512 /* UserView.swift */,
 				1BE4608A255EE3CF00576087 /* Assets.xcassets */,
-				1BE4608F255EE3CF00576087 /* Info.plist */,
+				1B09934B25DDBE3C00F26512 /* UserView.swift */,
 				1BE4608C255EE3CF00576087 /* Preview Content */,
-				1BE46088255EE3CD00576087 /* ContentView.swift */,
+				1BE4608F255EE3CF00576087 /* Info.plist */,
 			);
 			path = "Prayer App";
 			sourceTree = "<group>";
@@ -588,11 +574,9 @@
 				1B5B38C425F2B4C7009401EC /* BadgeViews.swift in Sources */,
 				1B9086A925ED56B60022B504 /* User+Schema.swift in Sources */,
 				1B9086A625ED56B60022B504 /* PrayerGroup+Schema.swift in Sources */,
-				1BE46089255EE3CD00576087 /* ContentView.swift in Sources */,
 				1B9086AE25ED56B60022B504 /* Prayer.swift in Sources */,
 				1B09934C25DDBE3C00F26512 /* UserView.swift in Sources */,
 				1B9086AD25ED56B60022B504 /* Answer.swift in Sources */,
-				1B1208322572FE52004C185D /* AccountView.swift in Sources */,
 				1B59B27F2572DA3F00E290F6 /* ListPrayersView.swift in Sources */,
 				1BD302992603C48500D9692D /* FlowSignUpAndConfrim.swift in Sources */,
 				1B1820B42562BFB000AC42EE /* CaptureImageView.swift in Sources */,
