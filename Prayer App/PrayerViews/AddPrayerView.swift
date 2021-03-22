@@ -80,7 +80,7 @@ struct AddPrayerView: View {
                     Section {
                         Button(action: {
 
-                            var prayer = Prayer(id : UUID().uuidString,
+                            let prayer = Prayer(id : UUID().uuidString,
                                             title: self.$title.wrappedValue,
                                             description: self.$description.wrappedValue,
                                             prayergroupID: self.$group.wrappedValue,
@@ -88,7 +88,7 @@ struct AddPrayerView: View {
                                             
                                             
                             )
-                            print("Save Prayer pressed as: \(self.user.username)")
+                            print("Save Prayer pressed as: \(self.user.username ?? "")")
                             
                             
         //                    //tomdo: this doesn't make sense but whatever
@@ -129,8 +129,8 @@ struct AddPrayerView: View {
                 .navigationBarTitle(Text("Add a Prayer"))
                 .onAppear {
                     if(group != "") {
-                        var array = user.pGroupsJoined()
-                        var item = array.filter {$0.id == group }
+                        let array = user.pGroupsJoined()
+                        let item = array.filter {$0.id == group }
                         if(item.count > 0) { groupName = item[0].name ?? "" }
                     
                     }
@@ -147,7 +147,7 @@ struct AddPrayerView: View {
     
     ///returns a boolen if the string is valid
     func verifyGroup(groupid: String) -> Bool {
-        if(groupid != nil && groupid != "" && groupid != " ") {
+        if(groupid != "" && groupid != " ") {
             return true
         }
         else {

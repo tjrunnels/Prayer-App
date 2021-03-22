@@ -112,13 +112,13 @@ struct MainTabView: View {
 
 
 
-struct MainTabView_Previews: PreviewProvider {
-    private struct leDummyUser: AuthUser {
-       let userId: String = "1"
-       let username: String = "dummyUser"
-   }
-    
-    static var previews: some View {
-        MainTabView(user: leDummyUser())
-    }
-}
+//struct MainTabView_Previews: PreviewProvider {
+//    private struct leDummyUser: AuthUser {
+//       let userId: String = "1"
+//       let username: String = "dummyUser"
+//   }
+//
+//    static var previews: some View {
+//        MainTabView(user: leDummyUser())
+//    }
+//}

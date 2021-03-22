@@ -747,7 +747,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 15BFC1183BF7143F4A17D6A9 /* Pods-Prayer App.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconPatrick;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconFiverr;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Prayer App/Preview Content\"";
@@ -770,7 +770,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6263CFE74F4F01844E20228B /* Pods-Prayer App.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconPatrick;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconFiverr;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Prayer App/Preview Content\"";

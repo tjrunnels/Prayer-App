@@ -31,7 +31,7 @@ struct ConfirmationView: View {
                     .padding(.bottom, 20)
                 
                 Button(action: {
-                    sessionManager.confirm(username: self.username, code: self.code)
+                    let _ = sessionManager.confirm(username: self.username, code: self.code)
                     print("signing up: \(self.username)")
                 }
                 ){

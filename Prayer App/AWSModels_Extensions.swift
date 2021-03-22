@@ -61,7 +61,7 @@ extension User: Hashable, Identifiable {
             return []
         }
         else {
-            var tmp = self.prayergroups!.toArray(ofType: PrayerGroupUser.self).map {$0.prayergroup}
+            let tmp = self.prayergroups!.toArray(ofType: PrayerGroupUser.self).map {$0.prayergroup}
             return tmp
         }
 
