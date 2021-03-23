@@ -109,6 +109,7 @@ struct FakeFormField: View {
     var placeholderText: String
     @Binding var text: String
     var disableAutoCorrect = false
+    var disableEditing = false
     
     var body: some View {
         VStack {
@@ -119,12 +120,25 @@ struct FakeFormField: View {
                     .padding(.leading)
                 Spacer()
             }
-            CustomTextField(placeholderText: self.placeholderText, text: $text, disableAutoCorrect: disableAutoCorrect)
-                .padding(.leading, 20)
-                .frame( height: 50)
-                .background(Color(.white))
-                .cornerRadius(10)
-                .padding([.leading, .trailing], 20)
+            if(disableEditing) {
+                Text(placeholderText)
+                    .foregroundColor(.gray)
+                    
+                    .padding(.leading, 20)
+                    .frame( height: 50)
+                    .background(Color(.white))
+                    .cornerRadius(10)
+                    .padding([.leading, .trailing], 20)
+            }
+            else {
+                CustomTextField(placeholderText: self.placeholderText, text: $text, disableAutoCorrect: disableAutoCorrect)
+                    .padding(.leading, 20)
+                    .frame( height: 50)
+                    .background(Color(.white))
+                    .cornerRadius(10)
+                    .padding([.leading, .trailing], 20)
+            }
+            
         }
     }
 }

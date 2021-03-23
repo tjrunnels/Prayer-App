@@ -45,9 +45,10 @@ struct Prayer_AppApp: App {
     var body: some Scene {
         WindowGroup {
   
+            //don't start the session without an AuthUser (1)
             switch (sessionData.currentAuthUser != nil) {
                 case true:
-                    MainTabView(user: sessionData.currentAuthUser!)
+                    MainTabView(authUser: sessionData.currentAuthUser!)
                         .environmentObject(authSessionManager)
                 default:
                     LoginView { user in

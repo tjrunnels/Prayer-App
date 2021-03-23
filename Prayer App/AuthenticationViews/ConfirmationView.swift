@@ -19,11 +19,12 @@ struct ConfirmationView: View {
         
         FakeFormView(viewTitle: "Verify Email Address", spacer: 40) {
         
+            Text("Check your email for a verification code").font(.subheadline)
 
             VStack {
                 HStack {
                     Text("for: ").font(.subheadline)
-                    Text(username).font(.title)
+                    Text(username).font(.title2)
                 }
                 Spacer()
                

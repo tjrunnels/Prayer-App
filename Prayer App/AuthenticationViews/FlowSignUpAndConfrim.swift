@@ -158,10 +158,15 @@ struct FlowSignUpAndConfrim: View {
     /// came from https://docs.amplify.aws/lib/auth/signin/q/platform/ios#register-a-user
 
     func handleConfirm(for username: String, with confirmationCode: String, confirmFailed: Binding<Bool>, feedback: Binding<String>) {
+        
+        
         Amplify.Auth.confirmSignUp(for: username, confirmationCode: confirmationCode) { result in
             switch result {
             case .success:
                 print("Confirm signUp succeeded")
+                print(result)
+                //TODO: Create new PrayerAppAPI User on AuthUser creation
+
                 confirmFailed.wrappedValue = false
                 feedback.wrappedValue = ""
             case .failure(let error):
@@ -170,7 +175,25 @@ struct FlowSignUpAndConfrim: View {
                 feedback.wrappedValue = "\(error)"
             }
         }
+        
+
+        
     }
+    
+//    func loadUserFromAuthID (userIDFromAuth: String) {
+//        Amplify.DataStore.query(
+//                User.self,
+//                where: User.keys.id == userIDFromAuth
+//            ) { result in
+//            do {
+//                let thisUser = try result.get()
+//
+//                print("User has been found:::\(1)")
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
 
     
 }

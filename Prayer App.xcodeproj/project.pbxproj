@@ -18,6 +18,7 @@
 		1B5B38C625F2B8AE009401EC /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B38C525F2B8AE009401EC /* AddGroupView.swift */; };
 		1B63104225FFC05000830901 /* AWSModels_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B63104125FFC05000830901 /* AWSModels_Extensions.swift */; };
 		1B7A12C6260142B10048629C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A12C5260142B10048629C /* CustomTextField.swift */; };
+		1B8D136A260A337C00F13B02 /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8D1369260A337C00F13B02 /* CreateUserView.swift */; };
 		1B8DDB0E2565762C00ADCB93 /* AuthSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */; };
 		1B8DDB132565800000ADCB93 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB122565800000ADCB93 /* LoginView.swift */; };
 		1B8DDB182565800E00ADCB93 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DDB172565800E00ADCB93 /* SignUpView.swift */; };
@@ -83,6 +84,7 @@
 		1B63104125FFC05000830901 /* AWSModels_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSModels_Extensions.swift; sourceTree = "<group>"; };
 		1B7A12C5260142B10048629C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		1B7A12C7260260130048629C /* Prayer App.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Prayer App.xctestplan"; sourceTree = "<group>"; };
+		1B8D1369260A337C00F13B02 /* CreateUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserView.swift; sourceTree = "<group>"; };
 		1B8DDB0D2565762C00ADCB93 /* AuthSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionManager.swift; sourceTree = "<group>"; };
 		1B8DDB122565800000ADCB93 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1B8DDB172565800E00ADCB93 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				1BE521DF2566B90A001A365F /* ConfirmationView.swift */,
 				1BE521E42566BC4C001A365F /* SessionView.swift */,
 				1BD302982603C48500D9692D /* FlowSignUpAndConfrim.swift */,
+				1B8D1369260A337C00F13B02 /* CreateUserView.swift */,
 			);
 			path = AuthenticationViews;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B41092625F1917B0080F908 /* GroupsView.swift in Sources */,
+				1B8D136A260A337C00F13B02 /* CreateUserView.swift in Sources */,
 				1B9086A725ED56B60022B504 /* AmplifyModels.swift in Sources */,
 				1BE521E02566B90A001A365F /* ConfirmationView.swift in Sources */,
 				1B9086A825ED56B60022B504 /* Prayer+Schema.swift in Sources */,

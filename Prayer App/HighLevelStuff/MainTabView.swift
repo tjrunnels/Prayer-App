@@ -12,14 +12,17 @@ struct MainTabView: View {
     @EnvironmentObject var authSessionManager : AuthSessionManager
     @StateObject var sessionData = SessionData()
 
-    let user: AuthUser
+    let authUser: AuthUser
     @State var showAdd: Bool = true
     
-    @State var userLoaded = false
+    @State var apiUserLoaded = false
+    @State var apiUserNonExistant = false
+    
+    @State var feedback = ""
     
     
-    
-    func loadUser (userIDFromAuth: String) {
+    func loadUser (userIDFromAuth: String) -> Bool {
+        var returnBool = false
         Amplify.DataStore.query(
                 User.self,
                 where: User.keys.id == userIDFromAuth
@@ -28,17 +31,28 @@ struct MainTabView: View {
                 let thisUser = try result.get()
                 print("prayers datastore query results: ")
                 print(thisUser)
-                if(thisUser.count > 1) {print("WARNING: found multiple Users from id: " + userIDFromAuth )}
-//                DispatchQueue.main.async {
-//
-//                }
-                sessionData.currentUser = thisUser.first
-                userLoaded = true
-                print("User has been loaded:::\(userIDFromAuth)")
+                if(thisUser.count < 1) {
+                    print("WARNING: found no Users from id: " + userIDFromAuth)
+                    returnBool = false
+                }
+//                DispatchQueue.main.async { }
+                else {
+                    if(thisUser.count > 1) {
+                        print("WARNING: found multiple Users from id: " + userIDFromAuth )
+                        //might be fine, grab the first user
+                    }
+                    sessionData.currentUser = thisUser.first
+                    returnBool = true
+                    apiUserLoaded = true
+                    print("User has been loaded:::\(userIDFromAuth)")
+                }
+                
             } catch {
+                returnBool = false
                 print(error)
             }
         }
+        return returnBool
     }
 
     
@@ -48,21 +62,35 @@ struct MainTabView: View {
     var body: some View {
         
         
-          switch (userLoaded) {
+          switch (apiUserLoaded) {
               case false:
                 VStack {
+                    
                     //ProgressView(value: 0.4).shadow(color: .red, radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
                     Text("Loading...")
                         .onAppear(perform: {
-                            loadUser(userIDFromAuth: user.userId)
+                            
+                            //ideally, this view is never loaded withouth an AuthUser (see Prayer_AppApp (1))
+                                //i would check again with && authUser.userid == nil but it might cause problems
+                            if(loadUser(userIDFromAuth: authUser.userId) == false) {
+                                apiUserNonExistant = true
+                            }
+                            
                         })
                         .onTapGesture {
-//                            userLoaded = true
-                    }
+                            feedback = "authUser: \(authUser.username ?? authUser.userId)...user: \(sessionData.currentUser?.username ?? "nil")"
+                        }
+                        .sheet(isPresented: $apiUserNonExistant) {
+                            CreateUserView(authUser: self.authUser, showThisView: $apiUserNonExistant, sessionDataUser: $sessionData.currentUser, userLoaded: $apiUserLoaded)
+                        }
+                    
+                    Text(feedback).font(.caption)
+                        
                 }
+                
               default:
                 TabView{
-                    ListPrayersView(authuser: user)
+                    ListPrayersView(authuser: authUser)
                         .tabItem {
                             Image(systemName: "mail.stack")
                             Text("Prayers")
@@ -72,7 +100,7 @@ struct MainTabView: View {
                     
                     
                     
-                    GroupsView(user: user)
+                    GroupsView(user: authUser)
                         .tabItem {
                             Image(systemName: "person.3.fill")
                             Text("Groups")
@@ -82,7 +110,7 @@ struct MainTabView: View {
                     
                     
                     
-                    UserView (user: self.user)
+                    UserView (user: self.authUser)
                         .tabItem {
                             Image(systemName: "person.2.circle")
                             Text("User")
